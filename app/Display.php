@@ -3,11 +3,22 @@ namespace App;
 
 class Display
 {
+    /**
+     * @var int
+     */
+    public $status = 0;
+
+    /**
+     * @var array
+     */
     protected $data = [
         'name', 'user_id', 'is_log',
     ];
-    public $status = 0;
 
+    /**
+     * @param string $name
+     * @param array $parameters
+     */
     public function __construct(string $name, array $parameters = [])
     {
         $this->setHeader();
@@ -20,13 +31,13 @@ class Display
         $this->setFooter();
     }
 
-    public function setHeader()
-    {
-        include DIR_BASE . '/src/views/html/Header.php';
-    }
-
     public function setFooter()
     {
         include DIR_BASE . '/src/views/html/Footer.php';
+    }
+
+    public function setHeader()
+    {
+        include DIR_BASE . '/src/views/html/Header.php';
     }
 }

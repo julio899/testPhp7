@@ -3,25 +3,15 @@ namespace App\controllers;
 
 class Products
 {
-
     public function __construct()
     {
     }
 
-    public static function getProducts($enlace)
-    {
-        return self::executeSql($enlace, 'SELECT * FROM `products`');
-    }
-
-    public static function store()
-    {
-        /**
-         *
-        INSERT INTO `products` (`id`, `name`, `description`, `status`, `price`, `score`, `stars`) VALUES (NULL, 'Shoes', 'Shoes Sport color: White', 'A', '125.50', '[\r\n  { \"start\":1, \"points\":0 },\r\n  { \"start\":2, \"points\":0 },\r\n  { \"start\":3, \"points\":0 },\r\n  { \"start\":4, \"points\":0 },\r\n  { \"start\":5, \"points\":0 },\r\n]', '0');
-         */
-        echo 'store';
-    }
-
+    /**
+     * @param $enlace
+     * @param string $sql
+     * @return mixed
+     */
     public static function executeSql($enlace, string $sql)
     {
         # $enlace = mysqli_connect(HOST, USER, PASS, BD);
@@ -48,5 +38,22 @@ class Products
                 return $dt;
             }
         }
+    }
+
+    /**
+     * @param $enlace
+     */
+    public static function getProducts($enlace)
+    {
+        return self::executeSql($enlace, 'SELECT * FROM `products`');
+    }
+
+    public static function store()
+    {
+        /**
+         *
+        INSERT INTO `products` (`id`, `name`, `description`, `status`, `price`, `score`, `stars`) VALUES (NULL, 'Shoes', 'Shoes Sport color: White', 'A', '125.50', '[\r\n  { \"start\":1, \"points\":0 },\r\n  { \"start\":2, \"points\":0 },\r\n  { \"start\":3, \"points\":0 },\r\n  { \"start\":4, \"points\":0 },\r\n  { \"start\":5, \"points\":0 },\r\n]', '0');
+         */
+        echo 'store';
     }
 }

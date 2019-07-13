@@ -6,9 +6,21 @@ namespace App\controllers;
  */
 class Session
 {
-    public $uri_request   = [];
+    /**
+     * @var mixed
+     */
+    public $permitted = false;
+
+    /**
+     * @var array
+     */
     public $uri_permitted = [];
-    public $permitted     = false;
+
+    /**
+     * @var array
+     */
+    public $uri_request = [];
+
     public function __construct()
     {
         @session_start();
@@ -31,6 +43,35 @@ class Session
 
     }
 
+    /**
+     * @return mixed
+     */
+    public function process_url_request(): array
+    {
+
+        $uri = urldecode(
+            parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
+        );
+
+        $parts_url  = explode('/', $uri);
+        $arr_unique = array_unique($parts_url);
+
+        $parts_clean = [];
+
+        foreach ($arr_unique as $key => $value)
+        {
+            if ($value !== "")
+            {
+                array_push($parts_clean, $value);
+            }
+
+        }
+        return $parts_clean;
+    }
+
+    /**
+     * @return boolean
+     */
     public function url_exist_in_valids(): bool
     {
         $is = false;
@@ -58,28 +99,5 @@ class Session
         }
 
         return $is;
-    }
-
-    public function process_url_request(): array
-    {
-
-        $uri = urldecode(
-            parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
-        );
-
-        $parts_url  = explode('/', $uri);
-        $arr_unique = array_unique($parts_url);
-
-        $parts_clean = [];
-
-        foreach ($arr_unique as $key => $value)
-        {
-            if ($value !== "")
-            {
-                array_push($parts_clean, $value);
-            }
-
-        }
-        return $parts_clean;
     }
 }

@@ -6,14 +6,31 @@ use App\Display;
 
 class Main
 {
-    protected $data = ['is_log'];
+    /**
+     * @var mixed
+     */
+    public $enlace = false;
 
-    public $enlace             = false;
+    /**
+     * @var array
+     */
+    public $parameters = [];
+
+    /**
+     * @var array
+     */
+    public $products = [];
+
+    /**
+     * @var mixed
+     */
     public $productsController = null;
-    public $products           = [];
-    public $parameters         = [];
 
+    /**
+     * @var int
+     */
     public $status = 0;
+
     public function __construct()
     {
         $this->enlace = mysqli_connect(HOST, USER, PASS, BD);
@@ -42,30 +59,37 @@ class Main
         $this->connect();
     }
 
-    public function toPage(string $page)
+    public function connect()
     {
-        switch ($page)
+        if (!$this->enlace)
         {
-            case 'login':
-                if (count($_POST) > 0)
-                {
-                    $this->proccessLogin($_POST);
-                }
-                else
-                {
-                    new Display('Login');
-                }
-                break;
 
-            case 'home':
-                new Display('LandingPage', $this->parameters);
-                break;
-            default:
-                new Display('LandingPage', $this->parameters);
-                break;
+            $parameters = [
+                'error' => "Error: No se pudo conectar a MySQL." . PHP_EOL . "<br>" .
+                "errno de depuración: " . mysqli_connect_errno() . PHP_EOL . "<br>" .
+                "error de depuración: " . mysqli_connect_error() . PHP_EOL,
+            ];
+
+            new Display('Error', $parameters);
+            exit;
         }
+        else
+        {
+            $parameters = [
+                'ok' => "Éxito: Se realizó una conexión apropiada a MySQL! La base de datos mi_bd es genial." . PHP_EOL .
+                "Información del host: " . mysqli_get_host_info($this->enlace) . PHP_EOL,
+            ];
+
+            new Display('Start', $parameters);
+
+        }
+
+        mysqli_close($this->enlace);
     }
 
+    /**
+     * @param array $data
+     */
     public function proccessLogin(array $data)
     {
         if ($this->enlace && !$this->enlace->connect_errno)
@@ -113,31 +137,30 @@ class Main
         }
     }
 
-    public function connect()
+    /**
+     * @param string $page
+     */
+    public function toPage(string $page)
     {
-        if (!$this->enlace)
+        switch ($page)
         {
+            case 'login':
+                if (count($_POST) > 0)
+                {
+                    $this->proccessLogin($_POST);
+                }
+                else
+                {
+                    new Display('Login');
+                }
+                break;
 
-            $parameters = [
-                'error' => "Error: No se pudo conectar a MySQL." . PHP_EOL . "<br>" .
-                "errno de depuración: " . mysqli_connect_errno() . PHP_EOL . "<br>" .
-                "error de depuración: " . mysqli_connect_error() . PHP_EOL,
-            ];
-
-            new Display('Error', $parameters);
-            exit;
+            case 'home':
+                new Display('LandingPage', $this->parameters);
+                break;
+            default:
+                new Display('LandingPage', $this->parameters);
+                break;
         }
-        else
-        {
-            $parameters = [
-                'ok' => "Éxito: Se realizó una conexión apropiada a MySQL! La base de datos mi_bd es genial." . PHP_EOL .
-                "Información del host: " . mysqli_get_host_info($this->enlace) . PHP_EOL,
-            ];
-
-            new Display('Start', $parameters);
-
-        }
-
-        mysqli_close($this->enlace);
     }
 }
