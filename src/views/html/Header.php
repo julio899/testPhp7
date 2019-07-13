@@ -13,6 +13,11 @@
 		{
 		 	echo '<link rel="stylesheet" href="'.URL_HOST.'src/assets/css/login.css">';	
 		}
+
+		if( $_SESSION['page'] === '/' )
+		{
+			echo '<link rel="stylesheet" href="'.URL_HOST.'src/assets/css/heroic-features.css" rel="stylesheet">';
+		}
 	?>
 	<!--favicon-->	
 	<link rel="shortcut icon" href="<?php echo URL_HOST;?>src/assets/favicon.ico" type="image/x-icon">
