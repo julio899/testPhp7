@@ -9,6 +9,9 @@ class Main
     ];
 
     var $enlace = false;
+    var $productsController = null;
+    var $products = [];
+    var $parameters = [];
 
     public $status = 0;
     public function __construct()
@@ -16,10 +19,17 @@ class Main
 		$this->enlace = mysqli_connect(HOST, USER, PASS, BD);
 
   		new Controladores\Session();
+  		$productsController = new Controladores\Products();
+  		$this->products = $productsController->getProducts($this->enlace);
+  		
+  		$this->parameters = [
+  			'products' => $this->products 
+  		];
+
   		
   		if ( !$_SESSION['permitted'] || $_SESSION['permitted'] === "false" )
   		{
-  			new Display('LandingPage');
+  			new Display('LandingPage',$this->parameters);
   			exit;
   		}else if( $_SESSION['permitted'] ){
   				$this->toPage($_SESSION['page']);
@@ -42,10 +52,10 @@ class Main
     			break;
     		
     		case 'home':
-    			new Display('LandingPage');
+    			new Display('LandingPage',$this->parameters);
     			break;
     		default:
-    			new Display('LandingPage');
+    			new Display('LandingPage',$this->parameters);
     			break;
     	}
     }

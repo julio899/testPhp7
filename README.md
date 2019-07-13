@@ -8,7 +8,7 @@ the next:
     // Config of Connection DB
     define("HOST","localhost");
     define("USER","root");
-    define("PASS", "Vinachi89.");
+    define("PASS", "*****");
     define("BD", "app_php7");
 
     // Uris Valids permitted
