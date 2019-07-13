@@ -1,16 +1,24 @@
 <?php
 namespace App;
 use App\Display;
-use App\controllers as Controlador;
+use App\controllers as Controladores;
 class Main
 {
     protected $data = [
         'is_log'
     ];
+
     public $status = 0;
     public function __construct()
     {
-  		new Controlador\Session();
+  		new Controladores\Session();
+
+  		if( $_SESSION['log'] === 0 ) {
+
+			new Display('Login');
+  			exit;
+  		}
+
     	$this->connect();
     }
 

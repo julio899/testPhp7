@@ -11,6 +11,7 @@ class Display
     public function __construct( string $name, array $parameters = [] )
     {
     	$this->setHeader();
+        
     	if ( is_readable( DIR_BASE . '/src/views/'.$name.'.php') )
     	{
     		include( DIR_BASE . '/src/views/'.$name.'.php');
