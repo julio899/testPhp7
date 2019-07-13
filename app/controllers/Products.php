@@ -28,10 +28,7 @@ class Products{
     		if (!$resultado = $enlace->query($sql)) {
 			    // ¡Ups, La consulta falló! 
 			    echo "Lo sentimos, este sitio web está experimentando problemas.";
-
-			    // De nuevo, no hacer esto en un sitio público, aunque nosotros mostraremos
-			    // cómo obtener información del error
-			    echo "Error: La ejecución de la consulta falló debido a: \n";
+				echo "Error: La ejecución de la consulta falló debido a: \n";
 			    echo "Query: " . $sql . "\n";
 			    echo "Errno: " . $mysqli->errno . "\n";
 			    echo "Error: " . $mysqli->error . "\n";

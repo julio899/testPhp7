@@ -4,9 +4,7 @@ use App\Display;
 use App\controllers as Controladores;
 class Main
 {
-    protected $data = [
-        'is_log'
-    ];
+    protected $data = ['is_log'];
 
     var $enlace = false;
     var $productsController = null;
@@ -19,8 +17,10 @@ class Main
 		$this->enlace = mysqli_connect(HOST, USER, PASS, BD);
 
   		new Controladores\Session();
-  		$productsController = new Controladores\Products();
-  		$this->products = $productsController->getProducts($this->enlace);
+
+  		$this->productsController = new Controladores\Products();
+  		
+  		$this->products = $this->productsController->getProducts($this->enlace);
   		
   		$this->parameters = [
   			'products' => $this->products 
@@ -31,7 +31,7 @@ class Main
   		{
   			new Display('LandingPage',$this->parameters);
   			exit;
-  		}else if( $_SESSION['permitted'] ){
+  		} else if ( $_SESSION['permitted'] ){
   				$this->toPage($_SESSION['page']);
   			exit;
   		}
@@ -83,7 +83,7 @@ class Main
 				if ($resultado->num_rows === 0) {
 				    // Usuario no encntrado 
 				    $parameters = [
-				    	'error' => "We are sorry. Could not find an account, Please Try again." 
+				    	'error' => "We are sorry. Invalid email/password combination!, Please Try again." 
 				    ];
 					new Display('Login',$parameters);
 				    exit;

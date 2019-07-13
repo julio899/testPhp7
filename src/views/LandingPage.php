@@ -35,6 +35,7 @@
     <div class="row text-center">
       <?php if ( isset($parameters) && isset($parameters['products']) ): ?>
         <?php foreach ($parameters['products'] as $key => $product): ?>
+          
           <div class="col-lg-3 col-md-6 mb-4">
             <div class="card h-100">
               <img class="card-img-top" src="http://placehold.it/500x325" alt="">
