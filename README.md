@@ -1,5 +1,5 @@
 # testPhp7
-you need make one file the config.php,
+you need make one file the config.php , in the root folder of the project,
 where you specifique.
 the next:
   -
