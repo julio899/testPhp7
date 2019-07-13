@@ -12,14 +12,30 @@ class Main
     public function __construct()
     {
   		new Controladores\Session();
-
-  		if( $_SESSION['log'] === 0 ) {
-
-			new Display('Login');
+  		
+  		if ( !$_SESSION['permitted'] || $_SESSION['permitted'] === "false" )
+  		{
+  			new Display('LandingPage');
+  			exit;
+  		}else if( $_SESSION['permitted'] ){
+  				$this->toPage($_SESSION['page']);
   			exit;
   		}
 
     	$this->connect();
+    }
+
+    public function toPage(string $page)
+    {
+    	switch ($page) {
+    		case 'login':
+    			new Display('Login');
+    			break;
+    		
+    		default:
+    			new Display('LandingPage');
+    			break;
+    	}
     }
 
     public function connect()
