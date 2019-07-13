@@ -1,0 +1,16 @@
+{
+    "name": "julio899/test-php7",
+    "description": "test",
+    "authors": [
+        {
+            "name": "Julio Vinachi",
+            "email": "julio899@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "require": {}
+}
