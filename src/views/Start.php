@@ -5,7 +5,7 @@
 
 
 <h1>
-	Start
+	Start <?php echo $_SESSION['Start']; ?>
 </h1>
 <?php 
 	

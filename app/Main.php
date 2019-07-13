@@ -1,6 +1,7 @@
 <?php
 namespace App;
 use App\Display;
+use App\controllers as Controlador;
 class Main
 {
     protected $data = [
@@ -9,7 +10,8 @@ class Main
     public $status = 0;
     public function __construct()
     {
-        $this->connect();
+  		new Controlador\Session();
+    	$this->connect();
     }
 
     public function connect()
