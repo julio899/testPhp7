@@ -17,8 +17,6 @@ the next:
             array("/", "login", "home")
         ));
 
-        # use it
-        $my_fruits = unserialize(URIS);
         // extras
         define("URL_HOST", 'http://localhost/testPhp7/');
         define("DIR_BASE", __DIR__);
