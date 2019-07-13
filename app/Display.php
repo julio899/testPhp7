@@ -12,7 +12,8 @@ class Display
     {
         $this->setHeader();
 
-        if (is_readable(DIR_BASE . '/src/views/' . $name . '.php')) {
+        if (is_readable(DIR_BASE . '/src/views/' . $name . '.php'))
+        {
             include DIR_BASE . '/src/views/' . $name . '.php';
         }
 

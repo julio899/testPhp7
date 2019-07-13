@@ -19,11 +19,13 @@ class Session
         # force to update always
         $_SESSION['permitted'] = $this->permitted;
 
-        if (!isset($_SESSION['Start'])) {
+        if (!isset($_SESSION['Start']))
+        {
             $_SESSION['Start'] = date("Y-m-d h:i:s", time());
         }
 
-        if (!isset($_SESSION['log'])) {
+        if (!isset($_SESSION['log']))
+        {
             $_SESSION['log'] = 0;
         }
 
@@ -32,16 +34,22 @@ class Session
     public function url_exist_in_valids(): bool
     {
         $is = false;
-        if (count($_SESSION['uri']) == 1) {
+        if (count($_SESSION['uri']) == 1)
+        {
             # if == 1 is because is in root
             $is               = true;
             $_SESSION['page'] = '/';
-        } else {
+        }
+        else
+        {
 
-            foreach ($this->uri_permitted as $key => $value) {
+            foreach ($this->uri_permitted as $key => $value)
+            {
 
-                foreach ($_SESSION['uri'] as $k => $v) {
-                    if ($value === $v) {
+                foreach ($_SESSION['uri'] as $k => $v)
+                {
+                    if ($value === $v)
+                    {
                         $is = true;
                     }
                 }
@@ -64,8 +72,10 @@ class Session
 
         $parts_clean = [];
 
-        foreach ($arr_unique as $key => $value) {
-            if ($value !== "") {
+        foreach ($arr_unique as $key => $value)
+        {
+            if ($value !== "")
+            {
                 array_push($parts_clean, $value);
             }
 

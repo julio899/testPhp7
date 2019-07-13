@@ -25,9 +25,11 @@ class Products
     public static function executeSql($enlace, string $sql)
     {
         # $enlace = mysqli_connect(HOST, USER, PASS, BD);
-        if ($enlace) {
+        if ($enlace)
+        {
 
-            if (!$resultado = $enlace->query($sql)) {
+            if (!$resultado = $enlace->query($sql))
+            {
                 // ¡Ups, La consulta falló!
                 echo "Lo sentimos, este sitio web está experimentando problemas.";
                 echo "Error: La ejecución de la consulta falló debido a: \n";
@@ -35,9 +37,12 @@ class Products
                 echo "Errno: " . $mysqli->errno . "\n";
                 echo "Error: " . $mysqli->error . "\n";
                 exit;
-            } else {
+            }
+            else
+            {
                 $dt = [];
-                while ($row = $resultado->fetch_assoc()) {
+                while ($row = $resultado->fetch_assoc())
+                {
                     array_push($dt, $row);
                 }
                 return $dt;
