@@ -45,3 +45,30 @@ header.jumbotron.my-4{
 .cartAdd{
 	color: #beff00;
 }
+.new-iten-add{
+	background-color: #eee;
+    color: #000!important;
+}
+
+.new-iten-add:hover{
+	background-color: #e7fff1 !important;
+}
+.new-iten-add>span.badge,
+.baged-total,
+.baged-pick-up{
+	font-size: 1.3em;
+	float: right;
+}
+div#container-cart-list{
+	min-width: 300px;
+	left: -170%;
+}
+.pickup{
+	font-size: 1.8em;	
+	transition: 0.3s;
+	animation: 0.3s;
+	margin: 0 10px;
+}
+.pickup:hover{
+	color: #beff00;
+}

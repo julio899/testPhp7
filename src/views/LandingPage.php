@@ -18,7 +18,22 @@
             </li>
           <?php endif;?>
           <li class="nav-item">
-              <a href="#Cart" class="cart cart-icon"><i id="cartIcon" class="fas fa-shopping-cart"></i></a>
+            <div class="btn-group">
+
+              <a href="#Cart" id="touch-cart-list" class="cart cart-icon dropdown-toggle" data-toggle="dropdown" ><i id="cartIcon" class="fas fa-shopping-cart"></i></a>
+              <div class="dropdown-menu" id="container-cart-list">
+                <div class="dropdown-divider"></div>
+
+                <a class="dropdown-item" id="pickupContainer" href="#">
+                  <i id="pickup" class="fas fa-truck-pickup pickup"></i>
+                  <i id="ups" class="fas fa-truck pickup"></i>
+                  <span id="baged-truck" class="badge badge-secondary badge-pill baged-pick-up">$0.00</span>
+                </a>
+
+                <a class="dropdown-item" href="#">Detaills <span id="baged-total" class="badge badge-warning badge-pill baged-total">$0.00</span></a>
+              </div>
+
+            </div>
           </li>
 
           <li class="nav-item">
@@ -58,7 +73,7 @@
               </div>
               <div class="card-footer">
                 <span class="badge badge-success badge-price form-control">$<?php echo $product['price']; ?></span>
-                <a href="#" class="btn btn-primary form-control btn-add">add to cart</a>
+                <a href="#" class="btn btn-primary form-control btn-add" data-price="<?php echo $product['price']; ?>" data-name="<?php echo $product['name']; ?>">add to cart</a>
               </div>
             </div>
           </div>
