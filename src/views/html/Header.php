@@ -14,7 +14,7 @@ if (isset($_SESSION['log']) && $_SESSION['log'] === 0)
     echo '<link rel="stylesheet" href="' . URL_HOST . 'src/assets/css/login.css">';
 }
 
-if ($_SESSION['page'] === '/')
+if ($_SESSION['page'] === '/' || $_SESSION['page'] === 'home')
 {
     echo '<link rel="stylesheet" href="' . URL_HOST . 'src/assets/css/heroic-features.css" rel="stylesheet">';
 }

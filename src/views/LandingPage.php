@@ -54,7 +54,8 @@
                 <p class="card-text"><?php echo $product['description']; ?></p>
               </div>
               <div class="card-footer">
-                <a href="#" class="btn btn-primary">Find Out More!</a>
+                <span class="badge badge-success badge-price form-control">$<?php echo $product['price']; ?></span>
+                <a href="#" class="btn btn-primary form-control">Find Out More!</a>
               </div>
             </div>
           </div>
