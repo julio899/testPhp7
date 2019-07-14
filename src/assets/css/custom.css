@@ -32,3 +32,16 @@ header.jumbotron.my-4{
 	position: initial;
     margin-right: 10px;
 }
+.cart{
+	color: #fff;
+	padding: 0px 10px 0px 0px;
+	font-size: 1.5em;
+	transition: 3s;
+	animation: 3s;
+}
+.cart:hover{	
+	color: #eee;
+}
+.cartAdd{
+	color: #beff00;
+}

@@ -14,14 +14,11 @@
               Wellcome, <strong><?php echo $_SESSION['acc']; ?></strong>
               <a href="#" class="badge badge-light bg-balance">$<?php echo $_SESSION['acc_balance']; ?></a>
               <a href="#" class="simb">&#128181;</a>
+              <a href="#Cart" class="cart cart-icon"><i id="cartIcon" class="fas fa-shopping-cart"></i></a>
+
             </li>
           <?php endif;?>
 
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
           <li class="nav-item">
             <?php if (!isset($_SESSION['acc'])): ?>
               <a class="nav-link btn btn-primary" href="login">Login</a>
@@ -40,7 +37,7 @@
 
     <!-- Jumbotron Header -->
     <header class="jumbotron my-4">
-      <h1 class="display-3">A Warm Welcome!</h1>
+      <h1 class="display-3">Welcome!</h1>
       <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
       <a href="#" class="btn btn-primary btn-lg">Call to action!</a>
     </header>
@@ -59,7 +56,7 @@
               </div>
               <div class="card-footer">
                 <span class="badge badge-success badge-price form-control">$<?php echo $product['price']; ?></span>
-                <a href="#" class="btn btn-primary form-control">add to cart</a>
+                <a href="#" class="btn btn-primary form-control btn-add">add to cart</a>
               </div>
             </div>
           </div>

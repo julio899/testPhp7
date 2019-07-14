@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>App</title>
 	<link rel="stylesheet" href="<?php echo URL_HOST; ?>src/assets/css/bootstrap.min2.css">
+	<link href="<?php echo URL_HOST; ?>src/assets/css/fontawesome.all.min.css" rel="stylesheet">
+	<link href="<?php echo URL_HOST; ?>src/assets/css/animate.css" rel="stylesheet">
 <?php
 /**
  * Condicionados
