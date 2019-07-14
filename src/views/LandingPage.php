@@ -10,7 +10,11 @@
         <ul class="navbar-nav ml-auto">
 
           <?php if (isset($_SESSION['acc'])): ?>
-            <li class="nav-item iten-user">Wellcome, <strong><?php echo $_SESSION['acc']; ?></strong></li>
+            <li class="nav-item iten-user">
+              Wellcome, <strong><?php echo $_SESSION['acc']; ?></strong>
+              <a href="#" class="badge badge-light bg-balance">$<?php echo $_SESSION['acc_balance']; ?></a>
+              <a href="#" class="simb">&#128181;</a>
+            </li>
           <?php endif;?>
 
           <li class="nav-item active">

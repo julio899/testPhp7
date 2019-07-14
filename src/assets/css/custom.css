@@ -11,3 +11,24 @@ header.jumbotron.my-4{
 	font-size: 2.3em;
 	margin-bottom: 0.1em;
 }
+.bg-balance{
+	font-size: 1.2em;
+    max-width: 88px;
+    border-radius: 7px;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: initial;
+}
+.iten-user{
+	margin: 0px;
+	padding: 0px;
+}
+.iten-user>a.simb{
+	font-size: 2em;
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	margin-bottom: -5px;
+	position: initial;
+    margin-right: 10px;
+}

@@ -135,11 +135,14 @@ class Main
                     {
                         $acc = $row;
                     }
+
                     // Aqui se inicializan los datos de session
-                    $_SESSION['acc']        = $acc['username'];
-                    $_SESSION['acc_id']     = $acc['id'];
-                    $_SESSION['acc_type']   = $acc['type'];
-                    $_SESSION['acc_status'] = $acc['status'];
+                    $_SESSION['acc']         = $acc['username'];
+                    $_SESSION['acc_id']      = $acc['id'];
+                    $_SESSION['acc_type']    = $acc['type'];
+                    $_SESSION['acc_status']  = $acc['status'];
+                    $_SESSION['acc_balance'] = number_format($acc['balance'], 2, '.', '');
+
                     header('Location: ' . URL_HOST . 'home');
                 }
             }
