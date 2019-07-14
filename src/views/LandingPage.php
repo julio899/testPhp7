@@ -14,10 +14,12 @@
               Wellcome, <strong><?php echo $_SESSION['acc']; ?></strong>
               <a href="#" class="badge badge-light bg-balance">$<?php echo $_SESSION['acc_balance']; ?></a>
               <a href="#" class="simb">&#128181;</a>
-              <a href="#Cart" class="cart cart-icon"><i id="cartIcon" class="fas fa-shopping-cart"></i></a>
 
             </li>
           <?php endif;?>
+          <li class="nav-item">
+              <a href="#Cart" class="cart cart-icon"><i id="cartIcon" class="fas fa-shopping-cart"></i></a>
+          </li>
 
           <li class="nav-item">
             <?php if (!isset($_SESSION['acc'])): ?>
