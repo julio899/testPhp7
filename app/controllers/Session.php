@@ -43,6 +43,14 @@ class Session
 
     }
 
+    public static function logout()
+    {
+        $_SESSION = null;
+        $_SESSION = array();
+        @session_destroy();
+        header('Location: ' . URL_HOST);
+    }
+
     /**
      * @return mixed
      */

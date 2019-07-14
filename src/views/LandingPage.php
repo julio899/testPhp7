@@ -1,20 +1,30 @@
-
+<?php @session_start();?>
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">testPhp7 - Julio Vinachi </a>
+      <a class="navbar-brand" href="#">testPhp7 - By Julio Vinachi </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
+
+          <?php if (isset($_SESSION['acc'])): ?>
+            <li class="nav-item iten-user">Wellcome, <strong><?php echo $_SESSION['acc']; ?></strong></li>
+          <?php endif;?>
+
           <li class="nav-item active">
             <a class="nav-link" href="#">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login">Login</a>
+            <?php if (!isset($_SESSION['acc'])): ?>
+              <a class="nav-link btn btn-primary" href="login">Login</a>
+            <?php else: ?>
+              <a class="nav-link btn btn-danger" href="logout">Logout</a>
+            <?php endif;?>
+
           </li>
         </ul>
       </div>

@@ -9,14 +9,17 @@
 /**
  * Condicionados
  */
-if (isset($_SESSION['log']) && $_SESSION['log'] === 0) {
+if (isset($_SESSION['log']) && $_SESSION['log'] === 0)
+{
     echo '<link rel="stylesheet" href="' . URL_HOST . 'src/assets/css/login.css">';
 }
 
-if ($_SESSION['page'] === '/') {
+if ($_SESSION['page'] === '/')
+{
     echo '<link rel="stylesheet" href="' . URL_HOST . 'src/assets/css/heroic-features.css" rel="stylesheet">';
 }
 ?>
+	<link rel="stylesheet" href="<?php echo URL_HOST; ?>src/assets/css/custom.css">
 	<!--favicon-->
 	<link rel="shortcut icon" href="<?php echo URL_HOST; ?>src/assets/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="<?php echo URL_HOST; ?>src/assets/favicon.ico" type="image/x-icon">

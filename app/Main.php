@@ -47,6 +47,10 @@ class Main
 
         if (!$_SESSION['permitted'] || $_SESSION['permitted'] === "false")
         {
+            if ($_SESSION['page'] === 'logout')
+            {
+                Controladores\Session::logout();
+            }
             new Display('LandingPage', $this->parameters);
             exit;
         }
@@ -125,12 +129,17 @@ class Main
                 else
                 {
                     // si existe resultado
-                    $acc = $resultado->fetch_assoc();
+                    $acc = [];
+
+                    while ($row = $resultado->fetch_assoc())
+                    {
+                        $acc = $row;
+                    }
                     // Aqui se inicializan los datos de session
-                    $_SESSION['acc']        = $acc->username;
-                    $_SESSION['acc_id']     = $acc->id;
-                    $_SESSION['acc_type']   = $acc->type;
-                    $_SESSION['acc_status'] = $acc->status;
+                    $_SESSION['acc']        = $acc['username'];
+                    $_SESSION['acc_id']     = $acc['id'];
+                    $_SESSION['acc_type']   = $acc['type'];
+                    $_SESSION['acc_status'] = $acc['status'];
                     header('Location: ' . URL_HOST . 'home');
                 }
             }
@@ -157,6 +166,9 @@ class Main
 
             case 'home':
                 new Display('LandingPage', $this->parameters);
+                break;
+            case 'logout':
+                Controladores\Session::logout();
                 break;
             default:
                 new Display('LandingPage', $this->parameters);
