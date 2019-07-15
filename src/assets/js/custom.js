@@ -22,9 +22,16 @@ for (var i = 0; i < countBtns; i++) {
         btnAdd.offsetParent.classList.add('animated', 'heartBeat');
         // New iten to add
         var newIten = document.createElement('a');
-        newIten.innerHTML = '<label class="pull-left">' + btnAdd.getAttribute('data-name') + '</label>  <span class="badge badge-success badge-pill">$' + btnAdd.getAttribute('data-price') + '</span>';
+        newIten.innerHTML = '<label class="pull-left">' + btnAdd.getAttribute('data-name') + '</label>  <span class="badge badge-success badge-pill">$' + btnAdd.getAttribute('data-price') + '</span> <span class="badge badge-danger badge-pill menos" data-price="' + btnAdd.getAttribute('data-price') + '" onclick="removeIten(this)"><i class="fas fa-minus"></i></span>';
         newIten.href = '#';
         newIten.classList.add('dropdown-item', 'new-iten-add');
+
+        newIten.addEventListener('click',(e)=>{
+        	e.preventDefault();
+        	console.log(e);
+        	console.log('epa');
+        });
+
         Totals = parseFloat(parseFloat(Totals) + parseFloat(btnAdd.getAttribute('data-price'))).toFixed(2);
         containerCartList.prepend(newIten);
         bagedTotal.innerText = '$ ' + Totals;
@@ -39,6 +46,7 @@ for (var i = 0; i < countBtns; i++) {
 var upsCheck = false;
 //Events pickup
 document.getElementById('pickupContainer').addEventListener('click', (evt) => {
+	evt.preventDefault();
     var idName = '';
     if (evt.originalTarget.localName == 'svg') {
         idName = evt.originalTarget.id;
@@ -66,3 +74,20 @@ document.getElementById('pickupContainer').addEventListener('click', (evt) => {
 		    });
     }, 100);
 });
+
+function removeIten(evt)
+{	
+	Totals = parseFloat(Totals).toFixed(2) - parseFloat(evt.getAttribute('data-price')).toFixed(2);
+    bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
+	console.log(evt.parentElement);
+	
+	setTimeout(()=>{
+		evt.parentElement.classList.add('animated', 'bounceOutLeft');
+        $('.dropdown-toggle').dropdown('show');
+		setTimeout(()=>{
+			// add delay of efect
+			evt.parentElement.remove();
+		},600);
+	},100);
+	return false;
+}

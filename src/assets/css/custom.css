@@ -72,3 +72,12 @@ div#container-cart-list{
 .pickup:hover{
 	color: #1c9ebc;
 }
+.new-iten-add>span.menos{
+	position: absolute;
+	right: 5px;
+	font-size: 0.9em;
+	margin-top: 0.1em;
+}
+.new-iten-add>span.badge.badge-success.badge-pill{
+	margin-right: 10px;
+}
