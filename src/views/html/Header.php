@@ -7,6 +7,9 @@
 	<link rel="stylesheet" href="<?php echo URL_HOST; ?>src/assets/css/bootstrap.min2.css">
 	<link href="<?php echo URL_HOST; ?>src/assets/css/fontawesome.all.min.css" rel="stylesheet">
 	<link href="<?php echo URL_HOST; ?>src/assets/css/animate.css" rel="stylesheet">
+	<link href="<?php echo URL_HOST; ?>src/assets/css/alertify.min.css" rel="stylesheet">
+	<link href="<?php echo URL_HOST; ?>src/assets/css/defaultAlertify.css" rel="stylesheet">
+
 <?php
 /**
  * Condicionados

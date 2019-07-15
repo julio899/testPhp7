@@ -80,6 +80,18 @@ document.getElementById('pickupContainer').addEventListener('click', (evt) => {
     }, 100);
 });
 
+//Event click to btn-pay
+document.querySelector('#btn-pay').addEventListener('click',(e) => {
+	console.log(e);
+
+	e.preventDefault();
+	e.stopPropagation();
+	if( parseFloat(Totals) <= 5 ){
+		alertify.alert('We are Sorry', 'Your need add some item to the cart!', function(){ alertify.success('Cart is Empty'); });
+	}
+});
+
+
 function removeIten(evt)
 {	
 	Totals = parseFloat(Totals).toFixed(2) - parseFloat(evt.getAttribute('data-price')).toFixed(2);

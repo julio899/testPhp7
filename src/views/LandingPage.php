@@ -31,6 +31,8 @@
                 </a>
 
                 <a class="dropdown-item" href="#">Total & Detaills <span id="baged-total" class="badge badge-warning badge-pill baged-total">$0.00</span></a>
+
+                <span id="btn-pay" class="dropdown-item badge badge-success form-control btn-pay">Buy</span>
               </div>
 
             </div>
