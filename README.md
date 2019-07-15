@@ -20,3 +20,6 @@ the next:
         // extras
         define("URL_HOST", 'http://localhost/testPhp7/');
         define("DIR_BASE", __DIR__);
+
+-- Load file BDv0.1.sql the data
+-- composer update or composer install

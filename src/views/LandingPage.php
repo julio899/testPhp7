@@ -73,21 +73,15 @@
               </div>
               <div class="card-footer">
                 <span class="form-control">
-<?php
-/*var_dump(json_encode(
-array(
-'star-1' => 0,
-'star-2' => 0,
-'star-3' => 0,
-'star-4' => 0,
-'star-5' => 0,
-)
-));*/
-?>
-                    <i class="fas fa-star star-yellow"></i>
-                  <?php for ($countStar = 1; $countStar < 5; $countStar++): ?>
-                    <i class="far fa-star"></i>
+
+                  <?php for ($countStar = 1; $countStar < 6; $countStar++): ?>
+                    <?php if ($countStar <= $product['starDinamic']): ?>
+                      <i class="fas fa-star star-yellow"></i>
+                    <?php else: ?>
+                      <i class="far fa-star"></i>
+                    <?php endif;?>
                   <?php endfor;?>
+
                 </span>
                 <span class="badge badge-success badge-price form-control">$<?php echo $product['price']; ?></span>
                 <a href="#" class="btn btn-primary form-control btn-add" data-price="<?php echo $product['price']; ?>" data-name="<?php echo $product['name']; ?>">add to cart</a>
