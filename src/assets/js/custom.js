@@ -82,12 +82,12 @@ function removeIten(evt)
 	console.log(evt.parentElement);
 	
 	setTimeout(()=>{
-		evt.parentElement.classList.add('animated', 'bounceOutLeft');
+		evt.parentElement.classList.add('animated', 'flipOutX');
         $('.dropdown-toggle').dropdown('show');
 		setTimeout(()=>{
 			// add delay of efect
 			evt.parentElement.remove();
-		},600);
+		},700);
 	},100);
 	return false;
 }
