@@ -85,3 +85,7 @@ div#container-cart-list{
 .new-iten-add > span:hover.menos{
 	background-color: #f04124!important;
 }
+
+.star-yellow{
+	color: #ffcf0c;
+}
