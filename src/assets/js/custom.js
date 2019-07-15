@@ -86,7 +86,8 @@ document.querySelector('#btn-pay').addEventListener('click',(e) => {
 
 	e.preventDefault();
 	e.stopPropagation();
-	if( parseFloat(Totals) <= 5 ){
+	if( parseFloat(Totals) <= 5 )
+	{
 		alertify.alert('We are Sorry', 'Your need add some item to the cart!', function(){ alertify.success('Cart is Empty'); });
 	}
 });
