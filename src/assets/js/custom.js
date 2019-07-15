@@ -22,7 +22,7 @@ for (var i = 0; i < countBtns; i++) {
         btnAdd.offsetParent.classList.add('animated', 'heartBeat');
         // New iten to add
         var newIten = document.createElement('a');
-        newIten.innerHTML = '<label class="pull-left">' + btnAdd.getAttribute('data-name') + '</label>  <span class="badge badge-success badge-pill">$' + btnAdd.getAttribute('data-price') + '</span> <span class="badge badge-danger badge-pill menos" data-price="' + btnAdd.getAttribute('data-price') + '" onclick="removeIten(this)"><i class="fas fa-minus"></i></span>';
+        newIten.innerHTML = '<label class="pull-left">' + btnAdd.getAttribute('data-name') + '</label>  <span class="badge badge-success badge-pill">$' + btnAdd.getAttribute('data-price') + '</span> <span class="badge badge-dark badge-pill menos" data-price="' + btnAdd.getAttribute('data-price') + '" onclick="removeIten(this)"><i class="fas fa-times"></i></span>';
         newIten.href = '#';
         newIten.classList.add('dropdown-item', 'new-iten-add');
 

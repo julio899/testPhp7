@@ -81,3 +81,7 @@ div#container-cart-list{
 .new-iten-add>span.badge.badge-success.badge-pill{
 	margin-right: 10px;
 }
+
+.new-iten-add > span:hover.menos{
+	background-color: #f04124!important;
+}
