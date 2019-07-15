@@ -152,7 +152,7 @@ class Main
     /**
      * @param string $page
      */
-    public function toPage(string $page)
+    public function toPage($page)
     {
         switch ($page)
         {

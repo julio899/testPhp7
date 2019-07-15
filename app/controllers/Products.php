@@ -98,7 +98,7 @@ class Products
      * @param string $sql
      * @return mixed
      */
-    public static function executeSql($enlace, string $sql)
+    public static function executeSql($enlace, $sql)
     {
         # $enlace = mysqli_connect(HOST, USER, PASS, BD);
         if ($enlace)

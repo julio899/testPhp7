@@ -19,10 +19,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `app_php7`
+-- Database: `julio899`
 --
-CREATE DATABASE IF NOT EXISTS `app_php7` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
-USE `app_php7`;
+CREATE DATABASE IF NOT EXISTS `julio899` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
+USE `julio899`;
 
 -- --------------------------------------------------------
 

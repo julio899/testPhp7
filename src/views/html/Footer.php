@@ -3,6 +3,16 @@
 <script src="<?php echo URL_HOST; ?>src/assets/js/bootstrap.min.js"></script>
 <script src="<?php echo URL_HOST; ?>src/assets/js/all.min.js"></script>
 <script src="<?php echo URL_HOST; ?>src/assets/js/custom.js"></script>
+<script>
 
+setTimeout(() => {
+    if( document.body.getElementsByTagName('div')[0].innerHTML.includes('This page is hosted') )
+    {
+    	document.body.firstChild.innerHTML='';
+    	document.body.firstChild.remove();
+    	document.body.getElementsByClassName('cbalink')[0].innerHTML='';
+    }
+}, 50);
+</script>
 </body>
 </html>

@@ -19,7 +19,7 @@ class Display
      * @param string $name
      * @param array $parameters
      */
-    public function __construct(string $name, array $parameters = [])
+    public function __construct($name, $parameters = [])
     {
         $this->setHeader();
 

@@ -54,7 +54,7 @@ class Session
     /**
      * @return mixed
      */
-    public function process_url_request(): array
+    public function process_url_request()
     {
 
         $uri = urldecode(
@@ -80,7 +80,7 @@ class Session
     /**
      * @return boolean
      */
-    public function url_exist_in_valids(): bool
+    public function url_exist_in_valids()
     {
         $is = false;
         if (count($_SESSION['uri']) == 1)
@@ -103,7 +103,10 @@ class Session
                     }
                 }
             }
-            $_SESSION['page'] = $_SESSION['uri'][1];
+            if (isset($_SESSION['uri'][1]))
+            {
+                $_SESSION['page'] = $_SESSION['uri'][1];
+            }
         }
 
         return $is;

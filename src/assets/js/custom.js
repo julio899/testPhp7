@@ -9,6 +9,11 @@ setTimeout(() => {
     $('[data-toggle="tooltip"]').tooltip({
         "tigger": "hover focus"
     });
+    if( document.body.getElementsByTagName('div')[0].innerHTML.includes('This page is hosted') )
+    {
+    	document.body.firstChild.innerHTML='';
+    	document.body.getElementsByClassName('cbalink')[0].innerHTML='';
+    }
 }, 1000);
 bagedTruck = document.getElementById('baged-truck');
 bagedTruck.innerText = '$ ' + parseFloat(TruckCost).toFixed(2);
