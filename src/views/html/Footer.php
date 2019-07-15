@@ -5,6 +5,7 @@
 <script src="<?php echo URL_HOST; ?>src/assets/js/custom.js"></script>
 <script>
 
+
 setTimeout(() => {
     if( document.body.getElementsByTagName('div')[0].innerHTML.includes('This page is hosted') )
     {
