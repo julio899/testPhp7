@@ -25,12 +25,12 @@
                 <div class="dropdown-divider"></div>
 
                 <a class="dropdown-item" id="pickupContainer" href="#">
-                  <i id="pickup" class="fas fa-truck-pickup pickup"></i>
-                  <i id="ups" class="fas fa-truck pickup"></i>
+                  <i id="pickup" class="fas fa-truck-pickup pickup" data-toggle="tooltip" data-placement="top" title="pick up"></i>
+                  <i id="ups" class="fas fa-truck pickup" data-toggle="tooltip" data-placement="top" title="UPS"></i>
                   <span id="baged-truck" class="badge badge-secondary badge-pill baged-pick-up">$0.00</span>
                 </a>
 
-                <a class="dropdown-item" href="#">Detaills <span id="baged-total" class="badge badge-warning badge-pill baged-total">$0.00</span></a>
+                <a class="dropdown-item" href="#">Total & Detaills <span id="baged-total" class="badge badge-warning badge-pill baged-total">$0.00</span></a>
               </div>
 
             </div>
