@@ -86,7 +86,7 @@
 
                 </span>
                 <span class="badge badge-success badge-price form-control">$<?php echo $product['price']; ?></span>
-                <a href="#" class="btn btn-primary form-control btn-add" data-price="<?php echo $product['price']; ?>" data-name="<?php echo $product['name']; ?>">add to cart</a>
+                <a href="#" class="btn btn-primary form-control btn-add" data-price="<?php echo $product['price']; ?>" data-name="<?php echo $product['name']; ?>" data-id="<?php echo $product['id']; ?>">add to cart</a>
               </div>
             </div>
           </div>

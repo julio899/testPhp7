@@ -29,12 +29,14 @@ for (var i = 0; i < countBtns; i++) {
         var newIten = document.createElement('a');
         newIten.innerHTML = '<label class="pull-left">' + btnAdd.getAttribute('data-name') + '</label>  <span class="badge badge-success badge-pill">$' + btnAdd.getAttribute('data-price') + '</span> <span class="badge badge-dark badge-pill menos" data-price="' + btnAdd.getAttribute('data-price') + '" onclick="removeIten(this)"><i class="fas fa-times"></i></span>';
         newIten.href = '#';
+        newIten.setAttribute('data-name', btnAdd.getAttribute('data-name') );
+        newIten.setAttribute('data-price', btnAdd.getAttribute('data-price') );
+        newIten.setAttribute('data-id', btnAdd.getAttribute('data-id') );
         newIten.classList.add('dropdown-item', 'new-iten-add');
 
         newIten.addEventListener('click',(e)=>{
         	e.preventDefault();
-        	console.log(e);
-        	console.log('epa');
+			e.stopPropagation();
         });
 
         Totals = parseFloat(parseFloat(Totals) + parseFloat(btnAdd.getAttribute('data-price'))).toFixed(2);
@@ -86,9 +88,17 @@ document.querySelector('#btn-pay').addEventListener('click',(e) => {
 
 	e.preventDefault();
 	e.stopPropagation();
-	if( parseFloat(Totals) <= 5 )
+	if( document.getElementsByClassName('new-iten-add').length > 5 )
 	{
 		alertify.alert('We are Sorry', 'Your need add some item to the cart!', function(){ alertify.success('Cart is Empty'); });
+	}else{
+		for (var i = 0; i < document.getElementsByClassName('new-iten-add').length; i++) {
+			console.log(
+				document.getElementsByClassName('new-iten-add').item(i).getAttribute('data-name'),
+				'$' + document.getElementsByClassName('new-iten-add').item(i).getAttribute('data-price'),
+				'#'+ document.getElementsByClassName('new-iten-add').item(i).getAttribute('data-id')
+			);
+		}
 	}
 });
 
