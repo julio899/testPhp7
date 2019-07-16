@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 15, 2019 at 01:30 PM
+-- Generation Time: Jul 16, 2019 at 02:44 PM
 -- Server version: 5.7.21-1
 -- PHP Version: 7.2.4-1+b1
 
@@ -19,10 +19,32 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `julio899`
+-- Database: `app_php7`
 --
-CREATE DATABASE IF NOT EXISTS `julio899` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
-USE `julio899`;
+CREATE DATABASE IF NOT EXISTS `app_php7` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
+USE `app_php7`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(10) NOT NULL,
+  `itens` text COLLATE utf8_spanish_ci NOT NULL,
+  `idUser` int(10) NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int(10) NOT NULL DEFAULT '1',
+  `total` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `itens`, `idUser`, `date`, `status`, `total`) VALUES
+(7, '[{\"name\":\"cheese\",\"price\":\"3.75\",\"id\":\"5\"},{\"name\":\"beer\",\"price\":\"2\",\"id\":\"3\"},{\"name\":\"water\",\"price\":\"1\",\"id\":\"4\"}]', 1, '2019-07-16 13:42:18', 1, 6.75);
 
 -- --------------------------------------------------------
 
@@ -78,6 +100,13 @@ INSERT INTO `users` (`id`, `username`, `password`, `status`, `type`, `balance`) 
 --
 
 --
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idUser` (`idUser`);
+
+--
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
@@ -96,6 +125,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
@@ -106,6 +141,16 @@ ALTER TABLE `products`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
