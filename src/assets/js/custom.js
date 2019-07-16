@@ -127,27 +127,29 @@ document.getElementById('touch-cart-list').addEventListener('click',(e)=>{
 
 var enableBtnPay = true;
 //Event click to btn-pay
-document.querySelector('#btn-pay').addEventListener('click',(e) => {
-	if (enableBtnPay)
-	{
+document.querySelector('#btn-pay').addEventListener('click',
+debounce(function() {
+
 		if( document.getElementsByClassName('new-iten-add').length == 0 )
 		{
 			alertify.alert('We are Sorry', 'Your need add some item to the cart!', function(){ alertify.success('Cart is Empty'); });
 		}else{
-			for (var i = 0; i < document.getElementsByClassName('new-iten-add').length; i++) {
-				console.log(
-					document.getElementsByClassName('new-iten-add').item(i).getAttribute('data-name'),
-					'$' + document.getElementsByClassName('new-iten-add').item(i).getAttribute('data-price'),
-					'#'+ document.getElementsByClassName('new-iten-add').item(i).getAttribute('data-id')
-				);
+			var cart = [];
+			for (var i = 0; i < document.getElementsByClassName('new-iten-add').length; i++)
+			{
+				var currentIten = document.getElementsByClassName('new-iten-add').item(i);
+				
+				cart.push({
+					"name"	:currentIten.getAttribute('data-name'),
+					"price"	:currentIten.getAttribute('data-price'),
+					"id"	:currentIten.getAttribute('data-id')
+				});
 			}
+
+				localStorage.setItem('cart',JSON.stringify(cart));
+				console.log(cart);
 		}
-		enableBtnPay = false;
-		setTimeout(()=>{ enableBtnPay = true; },1000 );
-	}
-
-
-});
+}, 250) );
 
 
 function removeIten(evt)
@@ -167,3 +169,18 @@ function removeIten(evt)
 	},100);
 	return false;
 }
+
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+};
