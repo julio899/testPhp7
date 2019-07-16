@@ -132,7 +132,11 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
             });
         }
         localStorage.setItem('cart', JSON.stringify(cart));
-        if (document.getElementById('isLog') != null && document.getElementById('isLog').value == true) {} else {
+        if (document.getElementById('isLog') != null && document.getElementById('isLog').value == "true") {
+        	alertify.alert('A moment', 'is processing!', function() {
+                alertify.success('A moment');
+            });
+        } else {
             alertify.alert('Hey Excellent, congratulations you first step', 'But, Is needed Login!', function() {
                 alertify.success('Auhtentication');
                 window.location.href = 'http://' + window.location.hostname + '' + window.location.pathname + 'login';
