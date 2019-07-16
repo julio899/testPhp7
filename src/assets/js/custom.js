@@ -69,11 +69,25 @@ document.getElementById('pickupContainer').addEventListener('click', (evt) => {
 	{
 		evt.preventDefault();
 	    var idName = '';
-	    if (evt.originalTarget.localName == 'svg') {
-	        idName = evt.originalTarget.id;
-	    } else if (evt.originalTarget.localName == 'path') {
-	        idName = evt.originalTarget.farthestViewportElement.id;
+
+	    // # Mozilla
+	    if(evt.originalTarget != undefined)
+	    {	    	
+		    if ( evt.originalTarget.localName == 'svg') {
+		        idName = evt.originalTarget.id;
+		    } else if ( evt.originalTarget.localName == 'path' ) {
+		        idName = evt.originalTarget.farthestViewportElement.id;
+		    }
+	    }else{
+	    // # Chrome
+		    if ( evt.target.localName == 'svg') {
+		        idName = evt.target.id;
+		    } else if ( evt.target.localName == 'path') {
+		        idName = evt.target.farthestViewportElement.id;
+		    }
 	    }
+
+
 	    if (idName === 'ups' && !upsCheck) {
 	        Totals = parseFloat(parseFloat(Totals) + 5);
 	        bagedTruck.innerText = '$' + parseFloat(5).toFixed(2);
@@ -105,7 +119,7 @@ var enableBtnCart = true;
 document.getElementById('touch-cart-list').addEventListener('click',(e)=>{
 	if (enableBtnCart)
 	{
-		$('#touch-cart-list').dropdown('show');
+	  //	$('#touch-cart-list').dropdown('show');
 		enableBtnCart = false;
 		setTimeout(()=>{ enableBtnCart = true; },1000 );
 	}
