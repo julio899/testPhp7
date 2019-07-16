@@ -33,6 +33,7 @@ class Main
 
     public function __construct()
     {
+        @session_start();
         $this->enlace = mysqli_connect(HOST, USER, PASS, BD);
 
         new Controladores\Session();
@@ -45,14 +46,19 @@ class Main
             'products' => $this->products,
         ];
 
-        if (!$_SESSION['permitted'] || $_SESSION['permitted'] === "false")
+        if ($_SESSION['page'] == '/')
+        {
+            new Display('LandingPage', $this->parameters);
+        }
+        else if (!$_SESSION['permitted'] || $_SESSION['permitted'] === "false")
         {
             if ($_SESSION['page'] === 'logout')
             {
                 Controladores\Session::logout();
             }
-            new Display('LandingPage', $this->parameters);
-            exit;
+
+            header('Location: ' . URL_HOST);
+
         }
         else if ($_SESSION['permitted'])
         {
@@ -174,7 +180,8 @@ class Main
                 Controladores\Session::logout();
                 break;
             default:
-                new Display('LandingPage', $this->parameters);
+                header('Location: ' . URL_HOST);
+                exit();
                 break;
         }
     }
