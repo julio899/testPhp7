@@ -83,16 +83,6 @@ class Main
             new Display('Error', $parameters);
             exit;
         }
-        else
-        {
-            $parameters = [
-                'ok' => "Éxito: Se realizó una conexión apropiada a MySQL! La base de datos mi_bd es genial." . PHP_EOL .
-                "Información del host: " . mysqli_get_host_info($this->enlace) . PHP_EOL,
-            ];
-
-            new Display('Start', $parameters);
-
-        }
 
         mysqli_close($this->enlace);
     }
