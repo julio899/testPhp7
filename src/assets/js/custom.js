@@ -105,12 +105,7 @@ var enableBtnCart = true;
 document.getElementById('touch-cart-list').addEventListener('click',(e)=>{
 	if (enableBtnCart)
 	{
-		if (document.getElementById('touch-cart-list').getAttribute('aria-expanded')==='false' ||
-			document.getElementById('touch-cart-list').getAttribute('aria-expanded')==='null' ||
-			document.getElementById('touch-cart-list').getAttribute('aria-expanded')===null)
-		{
-			$('#touch-cart-list').dropdown('show');
-		}
+		$('#touch-cart-list').dropdown('show');
 		enableBtnCart = false;
 		setTimeout(()=>{ enableBtnCart = true; },1000 );
 	}
