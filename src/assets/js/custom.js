@@ -147,7 +147,17 @@ debounce(function() {
 			}
 
 				localStorage.setItem('cart',JSON.stringify(cart));
-				console.log(cart);
+
+				if(document.getElementById('isLog')!=null && document.getElementById('isLog').value == true )
+				{
+
+				}
+				else{
+					alertify.alert('Hey Excellent, congratulations you first step', 'But, Is needed Login!', function(){ 
+						alertify.success('Auhtentication');
+						window.location.href+='login';
+					});		
+				}
 		}
 }, 250) );
 
