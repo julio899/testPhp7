@@ -159,9 +159,9 @@ class Main
         switch ($page)
         {
             case 'login':
-                if (count($post_params) > 0)
+                if (count($this->post_params) > 0)
                 {
-                    $this->proccessLogin($post_params);
+                    $this->proccessLogin($this->post_params);
                 }
                 else
                 {
