@@ -184,10 +184,13 @@ class Products
         if ($_SESSION['acc_balance'] >= $total)
         {
             // SQL UPDATE BD
-            self::executeSqlOnlyPush($enlace, "INSERT INTO `orders` (`id`, `itens`, `idUser`, `date`, `status`) VALUES (NULL, '" . $itensTxt . "', '" . $_SESSION['acc_id'] . "', CURRENT_TIMESTAMP, '1')");
-            // Now refresh data
-            $_SESSION['acc_balance'] -= $total;
-            $status = 'OK';
+            $resp = self::executeSqlOnlyPush($enlace, "INSERT INTO `orders` (`id`, `itens`, `idUser`, `date`, `status`, `total`) VALUES (NULL, '" . $itensTxt . "', '" . $_SESSION['acc_id'] . "', CURRENT_TIMESTAMP, '1','" . $total . "')");
+            if ($resp)
+            {
+                // Now refresh data
+                $_SESSION['acc_balance'] -= $total;
+                $status = 'OK';
+            }
         }
 
         echo json_encode(
