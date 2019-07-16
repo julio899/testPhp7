@@ -139,11 +139,42 @@ class Products
         return $products;
     }
 
+    /**
+     * @param $parameters
+     */
+    public function processing($parameters)
+    {
+        $total  = 0;
+        $status = 'CANCEL';
+        // Convert JSON string to Array
+        $itensArray = json_decode('[' . $parameters . ']', true);
+        foreach ($itensArray as $key => $value)
+        {
+            $total += $value['price'];
+        }
+
+        if ($_SESSION['acc_balance'] >= $total)
+        {
+            // SQL UPDATE BD
+
+            // Now refresh data
+            $_SESSION['acc_balance'] -= $total;
+            $status = 'OK';
+        }
+
+        echo json_encode(
+            array(
+                'total'  => $total,
+                'status' => $status,
+            )
+        );
+    }
+
     public static function store()
     {
         /**
          *
-        INSERT INTO `products` (`id`, `name`, `description`, `status`, `price`, `score`, `stars`) VALUES (NULL, 'Shoes', 'Shoes Sport color: White', 'A', '125.50', '[\r\n  { \"start\":1, \"points\":0 },\r\n  { \"start\":2, \"points\":0 },\r\n  { \"start\":3, \"points\":0 },\r\n  { \"start\":4, \"points\":0 },\r\n  { \"start\":5, \"points\":0 },\r\n]', '0');
+        INSERT INTO `products` (`id`, `name`, `description`, `status`, `price`, `score`, `stars`) VALUES (NULL, 'Shoes', 'Shoes Sport color: White', 'A', '125.50', '{"star-1":3,"star-2":0,"star-3":0,"star-4":0,"star-5":3}', '0');
          */
         echo 'store';
     }

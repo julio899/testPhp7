@@ -2,6 +2,7 @@
 var countBtns = document.getElementsByClassName('btn-add').length;
 var Totals = 0;
 var TruckCost = 0;
+var baseURI = document.getElementById('baseURI').value;
 // set truck to pickup cost $0
 document.getElementById('pickup').classList.add('cartAdd');
 // init tooltips
@@ -132,10 +133,40 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
             });
         }
         localStorage.setItem('cart', JSON.stringify(cart));
+        
         if (document.getElementById('isLog') != null && document.getElementById('isLog').value == "true") {
-        	alertify.alert('A moment', 'is processing!', function() {
+            alertify.alert('A moment', 'is processing!', function() {
                 alertify.success('A moment');
             });
+
+            var headers = new Headers();
+            headers.append('Accept', 'application/json'); // This one is enough for GET requests
+            headers.append('Content-Type', 'application/x-www-form-urlencoded'); // This one sends body
+            
+            fetch('processing', {
+                method: 'POST',
+                credentials: 'include',
+                headers: headers,
+                body: JSON.stringify({cart}),
+            }).then(resp => {
+                    resp.json().then((response)=>{
+                    	console.log(response);
+                    	if(response.status=='OK'){
+                    		alertify.alert('Success', 'Processing Successinfull!', function() {
+				                alertify.success('Refresh Data');
+				                localStorage.setItem('cart', JSON.stringify([]));
+				                setTimeout(()=>{
+				                	window.location.href = 'http://' + window.location.hostname + '' + window.location.pathname;            
+				                },1000);
+				            });
+                    	}
+                    });
+                
+                    
+            }).catch(err => {
+                //  ...
+            })
+
         } else {
             alertify.alert('Hey Excellent, congratulations you first step', 'But, Is needed Login!', function() {
                 alertify.success('Auhtentication');
@@ -146,9 +177,8 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
 }, 250));
 var enableRemove = true;
 
-function updateCart(newCart)
-{
-	localStorage.setItem('cart', JSON.stringify(newCart));
+function updateCart(newCart) {
+    localStorage.setItem('cart', JSON.stringify(newCart));
 }
 
 function removeIten(evt) {
@@ -165,7 +195,7 @@ function removeIten(evt) {
                 if (iten.id != undefined && iten.id === evt.parentElement.getAttribute('data-id') && !is_removed) {
                     is_removed = true;
                 } else {
-                	cart_up.push(iten);
+                    cart_up.push(iten);
                 }
             });
             updateCart(cart_up);

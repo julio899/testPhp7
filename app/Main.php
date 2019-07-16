@@ -31,11 +31,16 @@ class Main
      */
     public $status = 0;
 
+    /**
+     * @var array
+     */
+    private $post_params = [];
+
     public function __construct()
     {
+        $this->post_params = $_POST;
         @session_start();
         $this->enlace = mysqli_connect(HOST, USER, PASS, BD);
-
         new Controladores\Session();
 
         $this->productsController = new Controladores\Products();
@@ -62,6 +67,7 @@ class Main
         }
         else if ($_SESSION['permitted'])
         {
+
             $this->toPage($_SESSION['page']);
             exit;
         }
@@ -153,9 +159,9 @@ class Main
         switch ($page)
         {
             case 'login':
-                if (count($_POST) > 0)
+                if (count($post_params) > 0)
                 {
-                    $this->proccessLogin($_POST);
+                    $this->proccessLogin($post_params);
                 }
                 else
                 {
@@ -168,6 +174,24 @@ class Main
                 break;
             case 'logout':
                 Controladores\Session::logout();
+                break;
+            case 'processing':
+                $postIdentifierArr = array();
+
+                $jsonTxt = '';
+                foreach ($this->post_params as $key => $postName)
+                {
+                    foreach ($postName as $k2 => $v2)
+                    {
+                        $jsonTxt = $k2;
+                        array_push($postIdentifierArr, $jsonTxt);
+                    }
+
+                }
+
+                //echo json_encode($postIdentifierArr[0], true)
+                $this->productsController->processing($postIdentifierArr[0]);
+
                 break;
             default:
                 header('Location: ' . URL_HOST);
