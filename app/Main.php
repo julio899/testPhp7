@@ -190,7 +190,7 @@ class Main
                 }
 
                 //echo json_encode($postIdentifierArr[0], true)
-                $this->productsController->processing($postIdentifierArr[0]);
+                $this->productsController->processing($this->enlace, $postIdentifierArr[0]);
 
                 break;
             default:

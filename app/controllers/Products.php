@@ -128,6 +128,33 @@ class Products
 
     /**
      * @param $enlace
+     * @param $sql
+     */
+    public static function executeSqlOnlyPush($enlace, $sql)
+    {
+        # $enlace = mysqli_connect(HOST, USER, PASS, BD);
+        if ($enlace)
+        {
+
+            if (!$resultado = $enlace->query($sql))
+            {
+                // ¡Ups, La consulta falló!
+                echo "Lo sentimos, este sitio web está experimentando problemas.";
+                echo "Error: La ejecución de la consulta falló debido a: \n";
+                echo "Query: " . $sql . "\n";
+                echo "Errno: " . $mysqli->errno . "\n";
+                echo "Error: " . $mysqli->error . "\n";
+                exit;
+            }
+            else
+            {
+                return true;
+            }
+        }
+    }
+
+    /**
+     * @param $enlace
      */
     public static function getProducts($enlace)
     {
@@ -142,12 +169,13 @@ class Products
     /**
      * @param $parameters
      */
-    public function processing($parameters)
+    public function processing($enlace, $parameters)
     {
-        $total  = 0;
-        $status = 'CANCEL';
+        $total    = 0;
+        $status   = 'CANCEL';
+        $itensTxt = '[' . $parameters . ']';
         // Convert JSON string to Array
-        $itensArray = json_decode('[' . $parameters . ']', true);
+        $itensArray = json_decode($itensTxt, true);
         foreach ($itensArray as $key => $value)
         {
             $total += $value['price'];
@@ -156,7 +184,7 @@ class Products
         if ($_SESSION['acc_balance'] >= $total)
         {
             // SQL UPDATE BD
-
+            self::executeSqlOnlyPush($enlace, "INSERT INTO `orders` (`id`, `itens`, `idUser`, `date`, `status`) VALUES (NULL, '" . $itensTxt . "', '" . $_SESSION['acc_id'] . "', CURRENT_TIMESTAMP, '1')");
             // Now refresh data
             $_SESSION['acc_balance'] -= $total;
             $status = 'OK';
