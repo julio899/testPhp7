@@ -178,7 +178,7 @@ class Products
         $itensArray = json_decode($itensTxt, true);
         foreach ($itensArray as $key => $value)
         {
-            $total += $value['price'];
+            $total += floatval($value['price']);
         }
 
         if ($_SESSION['acc_balance'] >= $total)
@@ -188,8 +188,8 @@ class Products
             if ($resp)
             {
                 // Now refresh data
-                $_SESSION['acc_balance'] -= $total;
-                $status = 'OK';
+                $_SESSION['acc_balance'] = number_format((floatval($_SESSION['acc_balance']) - $total), 2, '.', '');
+                $status                  = 'OK';
             }
         }
 
