@@ -109,3 +109,6 @@ span#btn-pay:active{
 	background-color: #ff5d00;
 	transform: scale(1.1,1);
 }
+.sobreposition{
+	z-index: 2000;
+}

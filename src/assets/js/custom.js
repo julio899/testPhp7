@@ -29,7 +29,7 @@ for (var i = 0; i < countBtns; i++) {
 
 		        var containerCartList = document.getElementById('container-cart-list');
 		        var btnAdd = evt.currentTarget;
-		        btnAdd.offsetParent.classList.add('animated', 'heartBeat');
+		        btnAdd.offsetParent.classList.add('animated', 'heartBeat','sobreposition');
 		        // New iten to add
 		        var newIten = document.createElement('a');
 		        newIten.innerHTML = '<label class="pull-left">' + btnAdd.getAttribute('data-name') + '</label>  <span class="badge badge-success badge-pill">$' + btnAdd.getAttribute('data-price') + '</span> <span class="badge badge-dark badge-pill menos" data-price="' + btnAdd.getAttribute('data-price') + '" onclick="removeIten(this)"><i class="fas fa-times"></i></span>';
@@ -50,7 +50,7 @@ for (var i = 0; i < countBtns; i++) {
 		        document.getElementById('cartIcon').classList.add('animated', 'wobble', 'cartAdd');
 		        setTimeout(() => {
 		            btnAdd.classList.remove('animated', 'wobble');
-		            btnAdd.offsetParent.classList.remove('animated', 'heartBeat');
+		            btnAdd.offsetParent.classList.remove('animated', 'heartBeat','sobreposition');
 		            document.getElementById('cartIcon').classList.remove('animated', 'wobble', 'cartAdd');
 		        }, 1000);
 
