@@ -3,6 +3,8 @@ var countBtns = document.getElementsByClassName('btn-add').length;
 var Totals = 0;
 var TruckCost = 0;
 var baseURI = document.getElementById('baseURI').value;
+bagedTruck = document.getElementById('baged-truck');
+bagedTotal = document.getElementById('baged-total');
 // set truck to pickup cost $0
 document.getElementById('pickup').classList.add('cartAdd');
 // init tooltips
@@ -16,9 +18,7 @@ setTimeout(() => {
     }
     checkIfExistCart();
 }, 1000);
-bagedTruck = document.getElementById('baged-truck');
 bagedTruck.innerText = '$ ' + parseFloat(TruckCost).toFixed(2);
-bagedTotal = document.getElementById('baged-total');
 bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
 var btnAddEnable = true;
 for (var i = 0; i < countBtns; i++) {
@@ -183,7 +183,12 @@ function updateCart(newCart) {
 
 function removeIten(evt) {
     if (enableRemove) {
-        Totals = parseFloat(Totals).toFixed(2) - parseFloat(evt.getAttribute('data-price')).toFixed(2);
+    	if(parseFloat(Totals).toFixed(2)>parseFloat(evt.getAttribute('data-price')).toFixed(2))
+    	{
+        	Totals = parseFloat(Totals).toFixed(2) - parseFloat(evt.getAttribute('data-price')).toFixed(2);
+    	}else{
+    		Totals = 0;
+    	}
         bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
         console.log(evt.parentElement);
         evt.parentElement.classList.add('animated', 'flipOutX');
@@ -229,9 +234,11 @@ function debounce(func, wait, immediate) {
     };
 };
 
+
 function checkIfExistCart() {
     if (localStorage.getItem('cart') != null) {
         var cart = JSON.parse(localStorage.getItem('cart'));
+        Totals = 0;
         cart.map((iten) => {
             if (iten.id != undefined) {
                 var containerCartList = document.getElementById('container-cart-list');
@@ -244,7 +251,10 @@ function checkIfExistCart() {
                 newIten.setAttribute('data-id', iten.id);
                 newIten.classList.add('dropdown-item', 'new-iten-add');
                 containerCartList.prepend(newIten);
+                Totals = parseFloat(Totals) + parseFloat(iten.price);
             }
         });
+                console.log(Totals);
     }
+	bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
 }
