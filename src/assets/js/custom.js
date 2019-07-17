@@ -99,10 +99,8 @@ document.getElementById('pickupContainer').addEventListener('click', (evt) => {
             });
         }, 100);
         pickupActive = false;
-        setTimeout(() => {
-            pickupActive = true;
-        }, 1000);
     }
+    setTimeout(() => { pickupActive = true; }, 1000);
 });
 var enableBtnCart = true;
 // Event Btn
