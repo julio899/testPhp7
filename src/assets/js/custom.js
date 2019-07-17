@@ -133,13 +133,10 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
         localStorage.setItem('cart', JSON.stringify(cart));
         
         if (document.getElementById('isLog') != null && document.getElementById('isLog').value == "true") {
-            alertify.alert('A moment', 'is processing!', function() {
-                alertify.success('A moment');
-            });
-
+           
             var headers = new Headers();
-            headers.append('Accept', 'application/json'); // This one is enough for GET requests
-            headers.append('Content-Type', 'application/x-www-form-urlencoded'); // This one sends body
+            headers.append('Accept', 'application/json'); 
+            headers.append('Content-Type', 'application/x-www-form-urlencoded');
             
             fetch('processing', {
                 method: 'POST',
@@ -157,7 +154,9 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
 				                	window.location.href = 'http://' + window.location.hostname + '' + window.location.pathname;            
 				                },1000);
 				            });
-                    	}
+                    	}else if(response.status=='CANCEL'){
+                                alertify.error(response.msg);
+                        }
                     });
                 
                     

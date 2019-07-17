@@ -173,6 +173,7 @@ class Products
     {
         $total    = 0;
         $status   = 'CANCEL';
+        $msg      = '';
         $itensTxt = '[' . $parameters . ']';
         // Convert JSON string to Array
         $itensArray = json_decode($itensTxt, true);
@@ -192,11 +193,16 @@ class Products
                 $status                  = 'OK';
             }
         }
+        else
+        {
+            $msg = 'Sorry, but yours balance is insuficient';
+        }
 
         echo json_encode(
             array(
                 'total'  => $total,
                 'status' => $status,
+                'msg'    => $msg,
             )
         );
     }
