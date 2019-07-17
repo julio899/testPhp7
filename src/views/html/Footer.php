@@ -1,3 +1,5 @@
+<div id="loader" class="lds-roller no-display"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+
 <?php if (isset($_SESSION['acc'])): ?>
   <input type="hidden" value="true" name="isLog" id="isLog">
 <?php endif;?>
@@ -6,12 +8,17 @@
 
 <script>
 if
-	(
-		document.getElementsByTagName('div')[0] !== null &&
-		document.getElementsByTagName('div')[0].getAttribute('style') !== null &&
-		document.getElementsByTagName('div')[0].getAttribute('style').includes('background')
-	){
-		document.getElementsByTagName('div')[0].setAttribute('style','display:none');
+    (
+        document.getElementsByTagName('div')[0] !== null &&
+        document.getElementsByTagName('div')[0].getAttribute('style') !== null &&
+        document.getElementsByTagName('div')[0].getAttribute('style').includes('background')
+    ){
+
+        if (document.getElementsByTagName('div')[0].getAttribute('id')==null) {
+
+            document.getElementsByTagName('div')[0].setAttribute('style','display:none');
+        }
+
 }
 </script>
 <?php if ($_SESSION['page'] != 'login'): ?>
@@ -28,9 +35,9 @@ if
 setTimeout(() => {
     if( document.body.getElementsByTagName('div')[0].innerHTML.includes('This page is hosted') )
     {
-    	document.body.firstChild.innerHTML='';
-    	document.body.firstChild.remove();
-    	document.body.getElementsByClassName('cbalink')[0].innerHTML='';
+        document.body.firstChild.innerHTML='';
+        document.body.firstChild.remove();
+        document.body.getElementsByClassName('cbalink')[0].innerHTML='';
     }
 }, 50);
 </script>

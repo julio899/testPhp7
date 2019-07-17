@@ -13,7 +13,12 @@ setTimeout(() => {
         "tigger": "hover focus"
     });
     if (document.body.getElementsByTagName('div')[0].innerHTML.includes('This page is hosted')) {
-        document.body.firstChild.innerHTML = '';
+        
+        document.body.getElementsByTagName('div')[0].innerHTML = '';
+        document.body.getElementsByClassName('cbalink')[0].innerHTML = '';
+    }else if(document.body.getElementsByTagName('div')[1].innerHTML.includes('This page is hosted')){
+
+        document.body.getElementsByTagName('div')[1].innerHTML = '';
         document.body.getElementsByClassName('cbalink')[0].innerHTML = '';
     }
     checkIfExistCart();
@@ -133,7 +138,9 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
         localStorage.setItem('cart', JSON.stringify(cart));
         
         if (document.getElementById('isLog') != null && document.getElementById('isLog').value == "true") {
-           
+           // # Display the Loader 
+               document.getElementById('loader').classList.remove('no-display');
+            
             var headers = new Headers();
             headers.append('Accept', 'application/json'); 
             headers.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -145,7 +152,10 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
                 body: JSON.stringify({cart}),
             }).then(resp => {
                     resp.json().then((response)=>{
-                    	console.log(response);
+                    // # Hidden the Loader 
+                     document.getElementById('loader').classList.add('no-display');
+                     
+                     console.log(response);
                     	if(response.status=='OK'){
                     		alertify.alert('Success', 'Processing Successinfull!', function() {
 				                alertify.success('Refresh Data');
