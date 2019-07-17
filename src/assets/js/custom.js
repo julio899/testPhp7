@@ -167,7 +167,11 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
         } else {
             alertify.alert('Hey Excellent, congratulations you first step', 'But, Is needed Login!', function() {
                 alertify.success('Auhtentication');
-                window.location.href = 'http://' + window.location.hostname + '' + window.location.pathname + 'login';
+                if (window.location.hostname.includes('localhost')){
+                    window.location.href = 'http://' + window.location.hostname + ''+ window.location.pathname.replace('home','')  + 'login';                    
+                }else{
+                    window.location.href = 'http://' + window.location.hostname + '/' + 'login';
+                }
             });
         }
     }

@@ -51,7 +51,38 @@ class Main
             'products' => $this->products,
         ];
 
-        if ($_SESSION['page'] == '/')
+        if (isset($_SESSION['uri'][0]) && $_SESSION['uri'][0] == 'logout')
+        {
+
+            $_SESSION = null;
+            $_SESSION = array();
+            @session_destroy();
+            header('Location: ' . URL_HOST . 'home');
+            exit();
+        }
+        else if (isset($_SESSION['uri'][0]) && $_SESSION['uri'][0] == 'processing')
+        {
+            $postIdentifierArr = array();
+
+            $jsonTxt = '';
+            foreach ($this->post_params as $key => $postName)
+            {
+                foreach ($postName as $k2 => $v2)
+                {
+                    $jsonTxt = $k2;
+                    array_push($postIdentifierArr, $jsonTxt);
+                }
+
+            }
+            $this->productsController->processing($this->enlace, $postIdentifierArr[0]);
+        }
+        else if (isset($_SESSION['uri'][0]) && $_SESSION['uri'][0] == 'login')
+        {
+            $_SESSION['page'] = 'login';
+            $this->toPage('login');
+
+        }
+        else if ($_SESSION['page'] == '/')
         {
             new Display('LandingPage', $this->parameters);
         }

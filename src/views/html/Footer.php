@@ -4,6 +4,16 @@
 
 <input type="hidden" value="<?php echo URL_HOST; ?>" name="baseURI" id="baseURI">
 
+<script>
+if
+	(
+		document.getElementsByTagName('div')[0] !== null &&
+		document.getElementsByTagName('div')[0].getAttribute('style') !== null &&
+		document.getElementsByTagName('div')[0].getAttribute('style').includes('background')
+	){
+		document.getElementsByTagName('div')[0].setAttribute('style','display:none');
+}
+</script>
 <?php if ($_SESSION['page'] != 'login'): ?>
 <script src="<?php echo URL_HOST; ?>src/assets/js/jquery-3.3.1.slim.min.js"></script>
 <script src="<?php echo URL_HOST; ?>src/assets/js/popper.min.js"></script>
@@ -12,7 +22,6 @@
 <script src="<?php echo URL_HOST; ?>src/assets/js/all.min.js"></script>
 <script src="<?php echo URL_HOST; ?>src/assets/js/custom.js"></script>
 <?php endif;?>
-
 <script>
 
 
