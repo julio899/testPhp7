@@ -73,17 +73,20 @@
                 <p class="card-text"><?php echo $product['description']; ?></p>
               </div>
               <div class="card-footer">
-                <span class="form-control">
 
-                  <?php for ($countStar = 1; $countStar < 6; $countStar++): ?>
-                    <?php if ($countStar <= $product['starDinamic']): ?>
-                      <i class="fas fa-star star-yellow"></i>
-                    <?php else: ?>
-                      <i class="far fa-star"></i>
-                    <?php endif;?>
-                  <?php endfor;?>
+                <?php if (isset($_SESSION['acc'])): ?>
+                    <span class="form-control">
 
-                </span>
+                      <?php for ($countStar = 1; $countStar < 6; $countStar++): ?>
+                        <?php if ($countStar <= $product['starDinamic']): ?>
+                          <i class="fas fa-star star-yellow"></i>
+                        <?php else: ?>
+                          <i class="far fa-star"></i>
+                        <?php endif;?>
+                      <?php endfor;?>
+
+                    </span>
+                <?php endif;?>
                 <span class="badge badge-success badge-price form-control">$<?php echo $product['price']; ?></span>
                 <a href="#" class="btn btn-primary form-control btn-add" data-price="<?php echo $product['price']; ?>" data-name="<?php echo $product['name']; ?>" data-id="<?php echo $product['id']; ?>">add to cart</a>
               </div>
