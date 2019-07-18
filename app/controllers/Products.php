@@ -166,8 +166,18 @@ class Products
         else
         {
 
-            return self::executeSql($enlace, 'SELECT * FROM `votes` WHERE `id_product` = ' . $id_product . ' AND `id_user` = ' . $_SESSION['acc_id']);
+            return self::executeSql($enlace, 'SELECT * FROM `votes` WHERE `id_product` = ' . $id_product . ' AND `id_user` = ' . $_SESSION['acc_id'] . ' LIMIT 1');
         }
+    }
+
+    /**
+     * @param $enlace
+     * @param $id_product
+     */
+    public function getCommentProductByUser($enlace, $id_product)
+    {
+        echo json_encode(self::executeSql($enlace, 'SELECT * FROM `votes` WHERE `id_product` = ' . $id_product . ' AND `id_user` = ' . $_SESSION['acc_id'] . ' LIMIT 1'));
+        exit();
     }
 
     /**

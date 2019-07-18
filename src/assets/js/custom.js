@@ -181,6 +181,9 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
         }
     }
 }, 250));
+
+
+
 var enableRemove = true;
 
 function updateCart(newCart) {
@@ -304,4 +307,38 @@ function getCommentaries(pID) {
     }).catch(err => {
         alertify.error(err);
     });
+}
+
+function activateStar(star)
+{
+
+    for (var i = 5; i >= 1; i--) {
+          document.getElementById('star'+i).classList.add('far');
+          document.getElementById('star'+i).classList.remove('fas','star-yellow','animated','rubberBand');
+    }
+
+    for (var i = 1; i <= 5; i++) {
+        var numberStar = parseInt( star.getAttribute('id').replace('star','' ));
+        if(i <= numberStar){
+            document.getElementById('star'+i).classList.add('fas','star-yellow');
+        }
+    }
+            star.classList.add('animated','rubberBand');
+
+}
+
+function modCalcification(element) {
+          
+    console.log('modCalcification',element);
+    console.log(element.getAttribute('data-commentary'));
+    console.log(element.getAttribute('data-stars'));
+    document.getElementById('comment-edit').value = element.getAttribute('data-commentary');
+    
+    var numberStar = parseInt( element.getAttribute('data-stars') );
+    
+    for (var i = 1; i <= 5; i++) {
+        if(i <= numberStar){
+            document.getElementById('star'+i).classList.add('fas','star-yellow');
+        }
+    }
 }

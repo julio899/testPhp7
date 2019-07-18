@@ -244,3 +244,15 @@ div#loader{
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.star-plus{
+    font-size: 2.5em;
+    margin: 10px 10px;
+}
+.star-container{
+	text-align: center;
+    background-color: #edf7ff;
+    margin: 10px 0px;
+    border-radius: 7px;
+}
+}
