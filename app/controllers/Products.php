@@ -93,6 +93,32 @@ class Products
          */
     }
 
+    public static function calculateStars2($enlace, $idProduct)
+    {
+
+        $data_votes      = self::executeSql($enlace, 'SELECT * FROM `votes` WHERE `id_product` = ' . $idProduct);
+        $total_votes     = count($data_votes);
+        $total_stars     = 0;
+        $total_promedies = 0;
+
+        foreach ($data_votes as $key => $vote)
+        {
+            $total_stars += intval($vote['stars']);
+        }
+
+        if ($total_votes == 0)
+        {
+            $total_promedies = 0;
+        }
+        else
+        {
+
+            $total_promedies = number_format(floatval(($total_stars / $total_votes)), 2, '.', '');
+        }
+
+        return $total_promedies;
+    }
+
     /**
      * @param $enlace
      * @param string $sql
@@ -197,7 +223,7 @@ class Products
         $products = self::executeSql($enlace, 'SELECT * FROM `products`');
         foreach ($products as $key => $p)
         {
-            $products[$key]['starDinamic'] = self::calculateStars($p['score']);
+            $products[$key]['starDinamic'] = self::calculateStars2($enlace, $p['id']); // self::calculateStars($p['score']);
             $products[$key]['starByUser']  = self::getClasificationByUser($enlace, $p['id']);
         }
         return $products;
@@ -330,7 +356,7 @@ class Products
         // 5 stars
         foreach ($dt as $key => $value)
         {
-            # UPDATE All STARS THIS PRODUCT
+            # UPDATE All STARS of THIS PRODUCT
             $dt[$key] = intval(self::recalculeStar($enlace, $idProduct, $control));
             $control++;
         }
