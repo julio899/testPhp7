@@ -334,6 +334,13 @@ function modCalcification(element) {
             document.getElementById('star' + i).classList.add('fas', 'star-yellow');
         }
     }
+
+    if(document.getElementsByClassName('loader2').length > 0 )
+    {
+        setTimeout(()=>{
+            document.getElementsByClassName('loader2').item(0).classList.add('no-display');
+        },1000)
+    }
 }
 
 function updateStar() {
@@ -355,7 +362,6 @@ function updateStar() {
         // # Hidden the Loader 
         document.getElementsByClassName('loader2')[0].classList.add('no-display');
         resp.json().then((dataResp) => {
-            
             console.log(dataResp);
             if (dataResp.status == 'OK') {
                 $('#calcificationStar').modal('hide');
@@ -364,7 +370,6 @@ function updateStar() {
                     window.location.href = 'http://' + window.location.hostname + '' + window.location.pathname;
                 });
             }
-            
         });
     }).catch(err => {
         alertify.error(err);

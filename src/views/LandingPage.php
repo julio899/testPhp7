@@ -67,7 +67,7 @@
 
           <div class="col-lg-3 col-md-6 mb-4">
             <div class="card h-100">
-              <img class="card-img-top" src="http://placehold.it/500x325" alt="">
+              <img class="card-img-top" src="<?php echo $product['img']; ?>" alt="<?php echo $product['name']; ?>">
               <div class="card-body">
                 <h4 class="card-title"><?php echo $product['name']; ?></h4>
                 <p class="card-text"><?php echo $product['description']; ?></p>
