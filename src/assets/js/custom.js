@@ -13,11 +13,9 @@ setTimeout(() => {
         "tigger": "hover focus"
     });
     if (document.body.getElementsByTagName('div')[0].innerHTML.includes('This page is hosted')) {
-        
         document.body.getElementsByTagName('div')[0].innerHTML = '';
         document.body.getElementsByClassName('cbalink')[0].innerHTML = '';
-    }else if(document.body.getElementsByTagName('div')[1].innerHTML.includes('This page is hosted')){
-
+    } else if (document.body.getElementsByTagName('div')[1].innerHTML.includes('This page is hosted')) {
         document.body.getElementsByTagName('div')[1].innerHTML = '';
         document.body.getElementsByClassName('cbalink')[0].innerHTML = '';
     }
@@ -105,13 +103,15 @@ document.getElementById('pickupContainer').addEventListener('click', (evt) => {
         }, 100);
         pickupActive = false;
     }
-    setTimeout(() => { pickupActive = true; }, 1000);
+    setTimeout(() => {
+        pickupActive = true;
+    }, 1000);
 });
 var enableBtnCart = true;
 // Event Btn
 document.getElementById('touch-cart-list').addEventListener('click', (e) => {
     if (enableBtnCart) {
-        //	$('#touch-cart-list').dropdown('show');
+        //    $('#touch-cart-list').dropdown('show');
         enableBtnCart = false;
         setTimeout(() => {
             enableBtnCart = true;
@@ -136,50 +136,45 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
             });
         }
         localStorage.setItem('cart', JSON.stringify(cart));
-        
         if (document.getElementById('isLog') != null && document.getElementById('isLog').value == "true") {
-           // # Display the Loader 
-               document.getElementById('loader').classList.remove('no-display');
-            
+            // # Display the Loader 
+            document.getElementById('loader').classList.remove('no-display');
             var headers = new Headers();
-            headers.append('Accept', 'application/json'); 
+            headers.append('Accept', 'application/json');
             headers.append('Content-Type', 'application/x-www-form-urlencoded');
-            
             fetch('processing', {
                 method: 'POST',
                 credentials: 'include',
                 headers: headers,
-                body: JSON.stringify({cart}),
+                body: JSON.stringify({
+                    cart
+                }),
             }).then(resp => {
-                    resp.json().then((response)=>{
+                resp.json().then((response) => {
                     // # Hidden the Loader 
-                     document.getElementById('loader').classList.add('no-display');
-                     
-                     console.log(response);
-                    	if(response.status=='OK'){
-                    		alertify.alert('Success', 'Processing Successinfull!', function() {
-				                alertify.success('Refresh Data');
-				                localStorage.setItem('cart', JSON.stringify([]));
-				                setTimeout(()=>{
-				                	window.location.href = 'http://' + window.location.hostname + '' + window.location.pathname;            
-				                },1000);
-				            });
-                    	}else if(response.status=='CANCEL'){
-                                alertify.error(response.msg);
-                        }
-                    });
-                
-                    
+                    document.getElementById('loader').classList.add('no-display');
+                    console.log(response);
+                    if (response.status == 'OK') {
+                        alertify.alert('Success', 'Processing Successinfull!', function() {
+                            alertify.success('Refresh Data');
+                            localStorage.setItem('cart', JSON.stringify([]));
+                            setTimeout(() => {
+                                window.location.href = 'http://' + window.location.hostname + '' + window.location.pathname;
+                            }, 1000);
+                        });
+                    } else if (response.status == 'CANCEL') {
+                        alertify.error(response.msg);
+                    }
+                });
             }).catch(err => {
                 //  ...
             })
-
         } else {
             alertify.alert('Hey Excellent, congratulations you first step', 'But, Is needed Login!', function() {
                 alertify.success('Auhtentication');
-                if (window.location.hostname.includes('localhost')){
-                    window.location.href = 'http://' + window.location.hostname + ''+ window.location.pathname.replace('home','')  + 'login';                    
-                }else{
+                if (window.location.hostname.includes('localhost')) {
+                    window.location.href = 'http://' + window.location.hostname + '' + window.location.pathname.replace('home', '') + 'login';
+                } else {
                     window.location.href = 'http://' + window.location.hostname + '/' + 'login';
                 }
             });
@@ -194,12 +189,11 @@ function updateCart(newCart) {
 
 function removeIten(evt) {
     if (enableRemove) {
-    	if(parseFloat(Totals).toFixed(2)>parseFloat(evt.getAttribute('data-price')).toFixed(2))
-    	{
-        	Totals = parseFloat(Totals).toFixed(2) - parseFloat(evt.getAttribute('data-price')).toFixed(2);
-    	}else{
-    		Totals = 0;
-    	}
+        if (parseFloat(Totals).toFixed(2) > parseFloat(evt.getAttribute('data-price')).toFixed(2)) {
+            Totals = parseFloat(Totals).toFixed(2) - parseFloat(evt.getAttribute('data-price')).toFixed(2);
+        } else {
+            Totals = 0;
+        }
         bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
         console.log(evt.parentElement);
         evt.parentElement.classList.add('animated', 'flipOutX');
@@ -245,7 +239,6 @@ function debounce(func, wait, immediate) {
     };
 };
 
-
 function checkIfExistCart() {
     if (localStorage.getItem('cart') != null) {
         var cart = JSON.parse(localStorage.getItem('cart'));
@@ -265,7 +258,50 @@ function checkIfExistCart() {
                 Totals = parseFloat(Totals) + parseFloat(iten.price);
             }
         });
-                console.log(Totals);
+        console.log(Totals);
     }
-	bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
+    bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
+}
+
+function getCommentaries(pID) {
+    var listCommentaries = document.getElementById('list-commentaries');
+    listCommentaries.classList.add('no-display');
+    var headers = new Headers();
+    headers.append('Accept', 'application/json');
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    fetch('getCommentaries', {
+        method: 'POST',
+        credentials: 'include',
+        headers: headers,
+        body: JSON.stringify({
+            id: pID
+        }),
+    }).then(resp => {
+        // # Hidden the Loader 
+        document.getElementsByClassName('loader2')[0].classList.add('no-display');
+        listCommentaries.innerHTML = '';
+        listCommentaries.classList.remove('no-display');
+        resp.json().then((commentaries) => {
+            commentaries.forEach((Comment) => {
+                var span = document.createElement('span');
+                span.innerHTML = '<i class="fas fa-star star-yellow"></i> ' + Comment.stars;
+                var spanDate = document.createElement('span');
+                spanDate.innerText = Comment.date;
+                spanDate.classList.add('badge', 'badge-light', 'badge-pill');
+                var li = document.createElement('li');
+                li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+                li.innerText = Comment.commentary;
+                li.append(span);
+                listCommentaries.append(li);
+            });
+            if (commentaries.length == 0) {
+                var li = document.createElement('li');
+                li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+                li.innerText = 'Sorry, but this product, no has comments in this moment';
+                listCommentaries.append(li);
+            }
+        });
+    }).catch(err => {
+        alertify.error(err);
+    });
 }

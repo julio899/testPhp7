@@ -60,6 +60,21 @@ class Main
             header('Location: ' . URL_HOST . 'home');
             exit();
         }
+        else if (isset($_SESSION['uri'][1]) && $_SESSION['uri'][1] == 'getCommentaries')
+        {
+            $postIdentifierArr = array();
+
+            $jsonTxt = '';
+            foreach ($this->post_params as $key => $postName)
+            {
+                array_push($postIdentifierArr, $key);
+            }
+            // in Array
+            $dt = json_decode($postIdentifierArr[0], true);
+
+            $this->productsController->getCommentsProduct($this->enlace, $dt['id']);
+
+        }
         else if (isset($_SESSION['uri'][0]) && $_SESSION['uri'][0] == 'processing')
         {
             $postIdentifierArr = array();

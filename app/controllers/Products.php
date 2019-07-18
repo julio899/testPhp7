@@ -155,6 +155,32 @@ class Products
 
     /**
      * @param $enlace
+     * @param $id_product
+     */
+    public static function getClasificationByUser($enlace, $id_product)
+    {
+        if (!isset($_SESSION['acc_id']))
+        {
+            return array();
+        }
+        else
+        {
+
+            return self::executeSql($enlace, 'SELECT * FROM `votes` WHERE `id_product` = ' . $id_product . ' AND `id_user` = ' . $_SESSION['acc_id']);
+        }
+    }
+
+    /**
+     * @param $id_product
+     */
+    public function getCommentsProduct($enlace, $id_product)
+    {
+        echo json_encode(self::executeSql($enlace, 'SELECT * FROM `votes` WHERE `id_product` = ' . $id_product));
+        exit();
+    }
+
+    /**
+     * @param $enlace
      */
     public static function getProducts($enlace)
     {
@@ -162,6 +188,7 @@ class Products
         foreach ($products as $key => $p)
         {
             $products[$key]['starDinamic'] = self::calculateStars($p['score']);
+            $products[$key]['starByUser']  = self::getClasificationByUser($enlace, $p['id']);
         }
         return $products;
     }
@@ -205,6 +232,11 @@ class Products
                 'msg'    => $msg,
             )
         );
+    }
+
+    public static function saveClasificationByUser()
+    {
+        //INSERT INTO `votes` (`id`, `id_product`, `id_user`, `stars`, `commentary`) VALUES (NULL, '2', '1', '5', 'Excellent');
     }
 
     public static function store()
