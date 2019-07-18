@@ -283,6 +283,7 @@ function getCommentaries(pID) {
         document.getElementsByClassName('loader2')[0].classList.add('no-display');
         listCommentaries.innerHTML = '';
         listCommentaries.classList.remove('no-display');
+        document.getElementsByClassName('loader2')[1].classList.add('no-display');
         resp.json().then((commentaries) => {
             commentaries.forEach((Comment) => {
                 var span = document.createElement('span');
