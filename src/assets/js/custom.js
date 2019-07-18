@@ -93,11 +93,22 @@ document.getElementById('pickupContainer').addEventListener('click', (evt) => {
             bagedTruck.innerText = '$' + parseFloat(0).toFixed(2);
             upsCheck = false;
         }
+        
+        console.log(idName);
+        
+        if(idName=='pickup'){
+            localStorage.setItem('truck', 0.00);
+            bagedTruck.innerText = '$ 0';
+        }else{
+            localStorage.setItem('truck', 5.00);
+            bagedTruck.innerText = '$ 5';
+        }
+
         bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
         document.getElementById('ups').classList.remove('cartAdd');
         document.getElementById('pickup').classList.remove('cartAdd');
         document.getElementById(idName).classList.add('cartAdd');
-        $('#' + idName).tooltip('hide')
+        $('#' + idName).tooltip('hide');
         setTimeout(() => {
             $('.dropdown-toggle').dropdown('show');
             $('[data-toggle="tooltip"]').tooltip({
@@ -139,6 +150,8 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
             });
         }
         localStorage.setItem('cart', JSON.stringify(cart));
+        localStorage.setItem('truck', parseFloat(bagedTruck.innerText.replace('$','')).toFixed(2));
+        
         if (document.getElementById('isLog') != null && document.getElementById('isLog').value == "true") {
             // # Display the Loader 
             document.getElementById('loader').classList.remove('no-display');
@@ -161,6 +174,8 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
                         alertify.alert('Success', 'Processing Successinfull!', function() {
                             alertify.success('Refresh Data');
                             localStorage.setItem('cart', JSON.stringify([]));
+                            localStorage.setItem('truck', 0);
+        
                             setTimeout(() => {
                                 window.location.href = 'http://' + window.location.hostname + '' + window.location.pathname;
                             }, 1000);
@@ -188,6 +203,7 @@ var enableRemove = true;
 
 function updateCart(newCart) {
     localStorage.setItem('cart', JSON.stringify(newCart));
+    localStorage.setItem('truck', parseFloat(bagedTruck.innerText.replace('$','')).toFixed(2));        
 }
 
 function removeIten(evt) {
@@ -245,6 +261,7 @@ function debounce(func, wait, immediate) {
 function checkIfExistCart() {
     if (localStorage.getItem('cart') != null) {
         var cart = JSON.parse(localStorage.getItem('cart'));
+
         Totals = 0;
         cart.map((iten) => {
             if (iten.id != undefined) {
@@ -263,6 +280,21 @@ function checkIfExistCart() {
         });
         console.log(Totals);
     }
+
+    if (localStorage.getItem('truck') != null) {
+        if ( parseFloat(localStorage.getItem('truck')) > 0 )
+        {
+            console.log('changed icons Truck')
+            document.getElementById('ups').classList.add('cartAdd');
+            document.getElementById('pickup').classList.remove('cartAdd');
+        }
+
+        Totals = parseFloat(Totals) + parseFloat(localStorage.getItem('truck'));
+        bagedTruck.innerText = '$ '+ localStorage.getItem('truck');
+        
+        console.log('bg T#'+bagedTruck.innerText ,Totals);
+    }
+
     bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
 }
 
