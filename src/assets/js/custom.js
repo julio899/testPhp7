@@ -94,20 +94,28 @@ document.getElementById('pickupContainer').addEventListener('click', (evt) => {
             upsCheck = false;
         }
         
-        console.log(idName);
+        bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
+        console.log(idName,Totals);
         
         if(idName=='pickup'){
             localStorage.setItem('truck', 0.00);
             bagedTruck.innerText = '$ 0';
+            if(document.getElementsByClassName('new-iten-add').length = 0)
+            {
+                Totals = 0;
+                bagedTotal.innerText = '$ '+Totals;
+            }
         }else{
             localStorage.setItem('truck', 5.00);
             bagedTruck.innerText = '$ 5';
         }
 
-        bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
+
         document.getElementById('ups').classList.remove('cartAdd');
         document.getElementById('pickup').classList.remove('cartAdd');
-        document.getElementById(idName).classList.add('cartAdd');
+        if(idName!=''){
+            document.getElementById(idName).classList.add('cartAdd');
+        }
         $('#' + idName).tooltip('hide');
         setTimeout(() => {
             $('.dropdown-toggle').dropdown('show');
