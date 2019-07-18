@@ -206,6 +206,11 @@ class Products
     /**
      * @param $parameters
      */
+    /**
+     * @param $enlace
+     * @param $idProduct
+     * @param $star
+     */
     public function processing($enlace, $parameters)
     {
         $total    = 0;
@@ -244,6 +249,24 @@ class Products
         );
     }
 
+    /**
+     * @param $enlace
+     * @param $idProduct
+     * @param $star
+     */
+    public function recalculeStar($enlace, $idProduct, $star)
+    {
+        $stars_count = self::executeSql($enlace, "SELECT COUNT(*) as stars_count FROM `votes` WHERE id_product = $idProduct  AND stars = $star");
+        if (!isset($stars_count[0]) && !isset($stars_count[0]['stars_count']))
+        {
+            return 0;
+        }
+        else
+        {
+            return $stars_count[0]['stars_count'];
+        }
+    }
+
     public static function saveClasificationByUser()
     {
         //INSERT INTO `votes` (`id`, `id_product`, `id_user`, `stars`, `commentary`) VALUES (NULL, '2', '1', '5', 'Excellent');
@@ -261,6 +284,12 @@ class Products
     /**
      * @param $data
      */
+    /**
+     * @param $enlace
+     * @param $idProduct
+     * @param $stars
+     * @return mixed
+     */
     public function updateClasificationByUser($enlace, $data)
     {
         $status = '';
@@ -271,8 +300,43 @@ class Products
             $status = 'OK';
         }
 
-        echo json_encode(array('status' => $status));
+        echo json_encode(
+            array(
+                'status'  => $status,
+                'dinamic' => self::updateDinamicStar($enlace, $data['idProduct'], $data['stars']),
+            ));
         exit();
+
+    }
+
+    /**
+     * @param $enlace
+     * @param $idProduct
+     * @param $stars
+     * @return mixed
+     */
+    public function updateDinamicStar($enlace, $idProduct, $stars)
+    {
+
+        $resp1 = self::executeSql($enlace, "SELECT `score` FROM `products` WHERE `id` = $idProduct LIMIT 1");
+        $dt    = [];
+        foreach ($resp1[0] as $key => $value)
+        {
+            $dt = json_decode($value, true);
+        }
+        $k = 0;
+
+        $control = 1;
+        // 5 stars
+        foreach ($dt as $key => $value)
+        {
+            # UPDATE All STARS THIS PRODUCT
+            $dt[$key] = intval(self::recalculeStar($enlace, $idProduct, $control));
+            $control++;
+        }
+
+        $strJSON = json_encode($dt);
+        return self::executeSqlOnlyPush($enlace, "UPDATE `products` SET `score` = '$strJSON' WHERE `products`.`id` = $idProduct");
 
     }
 }

@@ -355,6 +355,8 @@ function updateStar() {
         // # Hidden the Loader 
         document.getElementsByClassName('loader2')[0].classList.add('no-display');
         resp.json().then((dataResp) => {
+            
+            console.log(dataResp);
             if (dataResp.status == 'OK') {
                 $('#calcificationStar').modal('hide');
                 alertify.success('update completed success');
@@ -362,6 +364,7 @@ function updateStar() {
                     window.location.href = 'http://' + window.location.hostname + '' + window.location.pathname;
                 });
             }
+            
         });
     }).catch(err => {
         alertify.error(err);
