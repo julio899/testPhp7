@@ -60,19 +60,17 @@ class Main
             header('Location: ' . URL_HOST . 'home');
             exit();
         }
+        else if (isset($_SESSION['uri'][1]) && $_SESSION['uri'][1] == 'sendStars')
+        {
+            $dt = self::getInArray($this->post_params);
+            $this->productsController->saveClasificationByUser($this->enlace, $dt);
+        }
         else if (isset($_SESSION['uri'][1]) && $_SESSION['uri'][1] == 'updateStar')
         {
-
-            $postIdentifierArr = array();
-
-            $jsonTxt = '';
-            foreach ($this->post_params as $key => $postName)
-            {
-                array_push($postIdentifierArr, $key);
-            }
-            // in Array
-            $dt = json_decode($postIdentifierArr[0], true);
-            $this->productsController->updateClasificationByUser($this->enlace, $dt);
+            $this->productsController->updateClasificationByUser(
+                $this->enlace,
+                self::getInArray($this->post_params)
+            );
         }
         else if (isset($_SESSION['uri'][1]) && $_SESSION['uri'][1] == 'getCommentaries')
         {
@@ -151,6 +149,22 @@ class Main
         }
 
         mysqli_close($this->enlace);
+    }
+
+    /**
+     * @param $data
+     */
+    public static function getInArray($data)
+    {
+        $postIdentifierArr = array();
+
+        $jsonTxt = '';
+        foreach ($data as $key => $postName)
+        {
+            array_push($postIdentifierArr, $key);
+        }
+        // in Array
+        return json_decode($postIdentifierArr[0], true);
     }
 
     /**

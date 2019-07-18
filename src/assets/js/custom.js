@@ -4,6 +4,7 @@ var Totals = 0;
 var StarsEdition = 0;
 var productInEdition = 0;
 var TruckCost = 0;
+var starSelected = false;
 var baseURI = document.getElementById('baseURI').value;
 bagedTruck = document.getElementById('baged-truck');
 bagedTotal = document.getElementById('baged-total');
@@ -280,10 +281,10 @@ function getCommentaries(pID) {
         }),
     }).then(resp => {
         // # Hidden the Loader 
-        document.getElementsByClassName('loader2')[0].classList.add('no-display');
+        loaderOff();
+        listCommentaries.classList.remove('no-display');
         listCommentaries.innerHTML = '';
         listCommentaries.classList.remove('no-display');
-        document.getElementsByClassName('loader2')[1].classList.add('no-display');
         resp.json().then((commentaries) => {
             commentaries.forEach((Comment) => {
                 var span = document.createElement('span');
@@ -324,6 +325,16 @@ function activateStar(star) {
     star.classList.add('animated', 'rubberBand');
 }
 
+function loaderOff()
+{
+   var countLoaders = document.getElementsByClassName('loader2').length;
+   for(var c=0;c<countLoaders;c++)
+   {
+        document.getElementsByClassName('loader2').item(c).classList.add('no-display');
+        console.log(c);       
+   }
+}
+
 function modCalcification(element) {
     productInEdition = parseInt(element.getAttribute('data-product-id'));
     document.getElementById('comment-edit').value = element.getAttribute('data-commentary');
@@ -334,34 +345,62 @@ function modCalcification(element) {
             document.getElementById('star' + i).classList.add('fas', 'star-yellow');
         }
     }
-
-    if(document.getElementsByClassName('loader2').length > 0 )
-    {
-        setTimeout(()=>{
-            document.getElementsByClassName('loader2').item(0).classList.add('no-display');
-        },1000)
-    }
+    loaderOff();
 }
 
 function modCalcificationM(element) {
+    starSelected = false;
     productInEdition = parseInt(element.getAttribute('data-product-id'));
+    document.getElementById('comment-edit-m').value = '';
     for (var i = 1; i <= 5; i++) {
-        document.getElementById('starM' + i).classList.remove('far','fas', 'star-yellow');
-        document.getElementById('starM' + i).classList.add('far');        
+        document.getElementById('starM' + i).classList.remove('far', 'fas', 'star-yellow');
+        document.getElementById('starM' + i).classList.add('far');
     }
-
-    if(document.getElementsByClassName('loader2').length > 0 )
-    {
-            document.getElementsByClassName('loader2').item(0).classList.add('no-display');
-    }
+    loaderOff();
 }
 
-function sendStars()
-{
-    console.log('sendStars');
+function sendStars() {
+    if (!starSelected) {
+        alertify.warning('Yours need selected some Star.');
+    } else {
+        loaderOff();
+        var data = {
+            "stars": StarsEdition,
+            "comment": document.getElementById('comment-edit-m').value,
+            "idProduct": productInEdition
+        };
+        console.log(data);
+        var headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        fetch('sendStars', {
+            method: 'POST',
+            credentials: 'include',
+            headers: headers,
+            body: JSON.stringify(data),
+        }).then(resp => {
+            // # Hidden the Loader 
+            loaderOff();
+            resp.json().then((dataResp) => {
+                console.log(dataResp);
+                if (dataResp.status == 'OK') {
+                    $('#make-calcification').modal('hide');
+                    alertify.success('Load is completed success');
+                    alertify.alert('Congratulations!', 'Your qualification has been successfully loaded.', function() {
+                        window.location.href = 'http://' + window.location.hostname + '' + window.location.pathname;
+                    });
+                }
+            });
+        }).catch(err => {
+            alertify.error(err);
+        });
+        /*
+         */
+    }
 }
 
 function activateStarM(star) {
+    starSelected = true;
     var numberStar = parseInt(star.getAttribute('id').replace('starM', ''));
     for (var i = 5; i >= 1; i--) {
         document.getElementById('starM' + i).classList.add('far');
@@ -375,7 +414,6 @@ function activateStarM(star) {
     StarsEdition = numberStar;
     star.classList.add('animated', 'rubberBand');
 }
-
 
 function updateStar() {
     console.log('updateStar');
@@ -394,7 +432,7 @@ function updateStar() {
         body: JSON.stringify(data),
     }).then(resp => {
         // # Hidden the Loader 
-        document.getElementsByClassName('loader2')[0].classList.add('no-display');
+        loaderOff();
         resp.json().then((dataResp) => {
             console.log(dataResp);
             if (dataResp.status == 'OK') {

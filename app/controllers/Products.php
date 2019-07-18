@@ -293,9 +293,25 @@ class Products
         }
     }
 
-    public static function saveClasificationByUser()
+    /**
+     * @param $enlace
+     * @param $dt
+     */
+    public static function saveClasificationByUser($enlace, $dt)
     {
-        //INSERT INTO `votes` (`id`, `id_product`, `id_user`, `stars`, `commentary`) VALUES (NULL, '2', '1', '5', 'Excellent');
+        $status = '';
+        // SQL UPDATE BD
+        $resp = self::executeSqlOnlyPush($enlace, "INSERT INTO `votes` (`id`, `id_product`, `id_user`, `stars`, `commentary`, `date`) VALUES (NULL, '" . $dt['idProduct'] . "', '" . $_SESSION['acc_id'] . "', '" . $dt['stars'] . "', '" . $dt['comment'] . "', CURRENT_TIMESTAMP);");
+        if ($resp)
+        {
+            $status = 'OK';
+        }
+
+        echo json_encode(
+            array(
+                'status' => $status,
+            ));
+        exit();
     }
 
     public static function store()
