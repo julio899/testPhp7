@@ -96,6 +96,7 @@
                             title="edit or change calcification"
                             data-commentary="<?php echo $product['starByUser'][0]['commentary']; ?>";
                             data-stars="<?php echo $product['starByUser'][0]['stars']; ?>";
+                            data-product-id="<?php echo $product['id']; ?>";
                             ></i>
                       <?php else: ?>
                         <i class="far fa-hand-point-left pull-right hand" data-toggle="tooltip" data-placement="top" title="Qualify"></i>
@@ -154,7 +155,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary mb-2" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary mb-2">Confirm Change</button>
+        <button type="button" onclick="updateStar()" class="btn btn-primary mb-2">Confirm Change</button>
       </div>
     </div>
   </div>

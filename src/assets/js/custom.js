@@ -1,6 +1,8 @@
 // Event animation btn-add
 var countBtns = document.getElementsByClassName('btn-add').length;
 var Totals = 0;
+var StarsEdition = 0;
+var productInEdition = 0;
 var TruckCost = 0;
 var baseURI = document.getElementById('baseURI').value;
 bagedTruck = document.getElementById('baged-truck');
@@ -181,9 +183,6 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
         }
     }
 }, 250));
-
-
-
 var enableRemove = true;
 
 function updateCart(newCart) {
@@ -309,33 +308,61 @@ function getCommentaries(pID) {
     });
 }
 
-function activateStar(star)
-{
-
+function activateStar(star) {
+    var numberStar = parseInt(star.getAttribute('id').replace('star', ''));
     for (var i = 5; i >= 1; i--) {
-          document.getElementById('star'+i).classList.add('far');
-          document.getElementById('star'+i).classList.remove('fas','star-yellow','animated','rubberBand');
+        document.getElementById('star' + i).classList.add('far');
+        document.getElementById('star' + i).classList.remove('fas', 'star-yellow', 'animated', 'rubberBand');
     }
-
     for (var i = 1; i <= 5; i++) {
-        var numberStar = parseInt( star.getAttribute('id').replace('star','' ));
-        if(i <= numberStar){
-            document.getElementById('star'+i).classList.add('fas','star-yellow');
+        if (i <= numberStar) {
+            document.getElementById('star' + i).classList.add('fas', 'star-yellow');
         }
     }
-            star.classList.add('animated','rubberBand');
-
+    StarsEdition = numberStar;
+    star.classList.add('animated', 'rubberBand');
 }
 
 function modCalcification(element) {
-    
+    productInEdition = parseInt(element.getAttribute('data-product-id'));
     document.getElementById('comment-edit').value = element.getAttribute('data-commentary');
-    
-    var numberStar = parseInt( element.getAttribute('data-stars') );
-    
+    var numberStar = parseInt(element.getAttribute('data-stars'));
+    StarsEdition = numberStar;
     for (var i = 1; i <= 5; i++) {
-        if(i <= numberStar){
-            document.getElementById('star'+i).classList.add('fas','star-yellow');
+        if (i <= numberStar) {
+            document.getElementById('star' + i).classList.add('fas', 'star-yellow');
         }
     }
+}
+
+function updateStar() {
+    console.log('updateStar');
+    var data = {
+        "stars": StarsEdition,
+        "comment": document.getElementById('comment-edit').value,
+        "idProduct": productInEdition
+    };
+    var headers = new Headers();
+    headers.append('Accept', 'application/json');
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    fetch('updateStar', {
+        method: 'POST',
+        credentials: 'include',
+        headers: headers,
+        body: JSON.stringify(data),
+    }).then(resp => {
+        // # Hidden the Loader 
+        document.getElementsByClassName('loader2')[0].classList.add('no-display');
+        resp.json().then((dataResp) => {
+            if (dataResp.status == 'OK') {
+                $('#calcificationStar').modal('hide');
+                alertify.success('update completed success');
+                alertify.alert('Congratulations!', 'Your qualification has been successfully loaded.', function() {
+                    window.location.href = 'http://' + window.location.hostname + '' + window.location.pathname;
+                });
+            }
+        });
+    }).catch(err => {
+        alertify.error(err);
+    });
 }

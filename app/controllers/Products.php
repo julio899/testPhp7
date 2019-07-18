@@ -257,4 +257,22 @@ class Products
          */
         echo 'store';
     }
+
+    /**
+     * @param $data
+     */
+    public function updateClasificationByUser($enlace, $data)
+    {
+        $status = '';
+        // SQL UPDATE BD
+        $resp = self::executeSqlOnlyPush($enlace, "UPDATE `votes` SET `commentary` = '" . $data['comment'] . "' , `stars` = " . $data['stars'] . " WHERE `votes`.`id_product` = " . $data['idProduct'] . " AND `votes`.`id_user` = " . $_SESSION['acc_id'] . ";");
+        if ($resp)
+        {
+            $status = 'OK';
+        }
+
+        echo json_encode(array('status' => $status));
+        exit();
+
+    }
 }
