@@ -343,6 +343,40 @@ function modCalcification(element) {
     }
 }
 
+function modCalcificationM(element) {
+    productInEdition = parseInt(element.getAttribute('data-product-id'));
+    for (var i = 1; i <= 5; i++) {
+        document.getElementById('starM' + i).classList.remove('far','fas', 'star-yellow');
+        document.getElementById('starM' + i).classList.add('far');        
+    }
+
+    if(document.getElementsByClassName('loader2').length > 0 )
+    {
+            document.getElementsByClassName('loader2').item(0).classList.add('no-display');
+    }
+}
+
+function sendStars()
+{
+    console.log('sendStars');
+}
+
+function activateStarM(star) {
+    var numberStar = parseInt(star.getAttribute('id').replace('starM', ''));
+    for (var i = 5; i >= 1; i--) {
+        document.getElementById('starM' + i).classList.add('far');
+        document.getElementById('starM' + i).classList.remove('fas', 'star-yellow', 'animated', 'rubberBand');
+    }
+    for (var i = 1; i <= 5; i++) {
+        if (i <= numberStar) {
+            document.getElementById('starM' + i).classList.add('fas', 'star-yellow');
+        }
+    }
+    StarsEdition = numberStar;
+    star.classList.add('animated', 'rubberBand');
+}
+
+
 function updateStar() {
     console.log('updateStar');
     var data = {

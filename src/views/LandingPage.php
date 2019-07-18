@@ -94,12 +94,19 @@
                             data-toggle="modal"
                             data-target="#calcificationStar"
                             title="edit or change calcification"
-                            data-commentary="<?php echo $product['starByUser'][0]['commentary']; ?>";
-                            data-stars="<?php echo $product['starByUser'][0]['stars']; ?>";
-                            data-product-id="<?php echo $product['id']; ?>";
+                            data-commentary="<?php echo $product['starByUser'][0]['commentary']; ?>"
+                            data-stars="<?php echo $product['starByUser'][0]['stars']; ?>"
+                            data-product-id="<?php echo $product['id']; ?>"
                             ></i>
                       <?php else: ?>
-                        <i class="far fa-hand-point-left pull-right hand" data-toggle="tooltip" data-placement="top" title="Qualify"></i>
+                        <i
+                            onclick="modCalcificationM(this)"
+                            class="far fa-hand-point-left pull-right hand"
+                            data-toggle="modal"
+                            data-target="#make-calcification"
+                            title="Qualify"
+                            data-product-id="<?php echo $product['id']; ?>"
+                            ></i>
                       <?php endif;?>
 
                     </span>
@@ -128,6 +135,39 @@
 
 
 <!-- Modals -->
+
+<!-- Make a Calificate -->
+<div class="modal fade" id="make-calcification" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">Send Calcification Stars</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body content-commentaries-m">
+         <div class="loader2"></div>
+
+          <div class="star-container">
+              <i id="starM1" onclick="activateStarM(this)" class="far fa-star star-plus"></i>
+              <i id="starM2" onclick="activateStarM(this)" class="far fa-star star-plus"></i>
+              <i id="starM3" onclick="activateStarM(this)" class="far fa-star star-plus"></i>
+              <i id="starM4" onclick="activateStarM(this)" class="far fa-star star-plus"></i>
+              <i id="starM5" onclick="activateStarM(this)" class="far fa-star star-plus"></i>
+          </div>
+
+
+         <input id="comment-edit-m" class="form-control form-control-lg" type="text" placeholder="Some Comment">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary mb-2" data-dismiss="modal">Close</button>
+        <button type="button" onclick="sendStars()" class="btn btn-primary mb-2">Confirm Change</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ./ Make a Calificate -->
 
 <!-- Calificate Star -->
 <div class="modal fade" id="calcificationStar" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
