@@ -328,10 +328,7 @@ function activateStar(star)
 }
 
 function modCalcification(element) {
-          
-    console.log('modCalcification',element);
-    console.log(element.getAttribute('data-commentary'));
-    console.log(element.getAttribute('data-stars'));
+    
     document.getElementById('comment-edit').value = element.getAttribute('data-commentary');
     
     var numberStar = parseInt( element.getAttribute('data-stars') );
