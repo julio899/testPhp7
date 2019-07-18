@@ -93,27 +93,22 @@ document.getElementById('pickupContainer').addEventListener('click', (evt) => {
             bagedTruck.innerText = '$' + parseFloat(0).toFixed(2);
             upsCheck = false;
         }
-        
         bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
-        console.log(idName,Totals);
-        
-        if(idName=='pickup'){
+        console.log(idName, Totals);
+        if (idName == 'pickup') {
             localStorage.setItem('truck', 0.00);
             bagedTruck.innerText = '$ 0';
-            if(document.getElementsByClassName('new-iten-add').length = 0)
-            {
+            if (document.getElementsByClassName('new-iten-add').length = 0) {
                 Totals = 0;
-                bagedTotal.innerText = '$ '+Totals;
+                bagedTotal.innerText = '$ ' + Totals;
             }
-        }else{
+        } else {
             localStorage.setItem('truck', 5.00);
             bagedTruck.innerText = '$ 5';
         }
-
-
         document.getElementById('ups').classList.remove('cartAdd');
         document.getElementById('pickup').classList.remove('cartAdd');
-        if(idName!=''){
+        if (idName != '') {
             document.getElementById(idName).classList.add('cartAdd');
         }
         $('#' + idName).tooltip('hide');
@@ -158,8 +153,7 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
             });
         }
         localStorage.setItem('cart', JSON.stringify(cart));
-        localStorage.setItem('truck', parseFloat(bagedTruck.innerText.replace('$','')).toFixed(2));
-        
+        localStorage.setItem('truck', parseFloat(bagedTruck.innerText.replace('$', '')).toFixed(2));
         if (document.getElementById('isLog') != null && document.getElementById('isLog').value == "true") {
             // # Display the Loader 
             document.getElementById('loader').classList.remove('no-display');
@@ -183,7 +177,6 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
                             alertify.success('Refresh Data');
                             localStorage.setItem('cart', JSON.stringify([]));
                             localStorage.setItem('truck', 0);
-        
                             setTimeout(() => {
                                 window.location.href = 'http://' + window.location.hostname + '' + window.location.pathname;
                             }, 1000);
@@ -211,7 +204,7 @@ var enableRemove = true;
 
 function updateCart(newCart) {
     localStorage.setItem('cart', JSON.stringify(newCart));
-    localStorage.setItem('truck', parseFloat(bagedTruck.innerText.replace('$','')).toFixed(2));        
+    localStorage.setItem('truck', parseFloat(bagedTruck.innerText.replace('$', '')).toFixed(2));
 }
 
 function removeIten(evt) {
@@ -269,7 +262,6 @@ function debounce(func, wait, immediate) {
 function checkIfExistCart() {
     if (localStorage.getItem('cart') != null) {
         var cart = JSON.parse(localStorage.getItem('cart'));
-
         Totals = 0;
         cart.map((iten) => {
             if (iten.id != undefined) {
@@ -286,23 +278,16 @@ function checkIfExistCart() {
                 Totals = parseFloat(Totals) + parseFloat(iten.price);
             }
         });
-        console.log(Totals);
     }
-
     if (localStorage.getItem('truck') != null) {
-        if ( parseFloat(localStorage.getItem('truck')) > 0 )
-        {
+        if (parseFloat(localStorage.getItem('truck')) > 0) {
             console.log('changed icons Truck')
             document.getElementById('ups').classList.add('cartAdd');
             document.getElementById('pickup').classList.remove('cartAdd');
         }
-
         Totals = parseFloat(Totals) + parseFloat(localStorage.getItem('truck'));
-        bagedTruck.innerText = '$ '+ localStorage.getItem('truck');
-        
-        console.log('bg T#'+bagedTruck.innerText ,Totals);
+        bagedTruck.innerText = '$ ' + localStorage.getItem('truck');
     }
-
     bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
 }
 
@@ -365,14 +350,12 @@ function activateStar(star) {
     star.classList.add('animated', 'rubberBand');
 }
 
-function loaderOff()
-{
-   var countLoaders = document.getElementsByClassName('loader2').length;
-   for(var c=0;c<countLoaders;c++)
-   {
+function loaderOff() {
+    var countLoaders = document.getElementsByClassName('loader2').length;
+    for (var c = 0; c < countLoaders; c++) {
         document.getElementsByClassName('loader2').item(c).classList.add('no-display');
-        console.log(c);       
-   }
+        console.log(c);
+    }
 }
 
 function modCalcification(element) {
