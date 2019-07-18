@@ -23,3 +23,14 @@ the next:
 
    ## Load file BDv0.1.sql the data
    ## composer update or composer install
+
+----------
+## Users
+        user@user.com
+        user1@user.com
+        user2@user.com
+        user3@user.com
+        user4@user.com
+        user5@user.com
+
+        all the passwords  -> vinachi89
