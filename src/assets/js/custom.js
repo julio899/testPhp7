@@ -361,7 +361,7 @@ function checkIfExistCart() {
 
 
                 containerCartList.prepend(newIten);
-                Totals = parseFloat(Totals) + parseFloat(iten.price);
+                Totals = parseFloat(Totals) + ( parseInt(iten.totals) * parseFloat(iten.price));
             }
         });
     }
@@ -578,7 +578,7 @@ function checkout(){
                 newIten.classList.add('dropdown-item', 'new-iten-add');
                 containerCartList.prepend(newIten);
                 //Totals = parseFloat(Totals) + parseFloat(iten.price);
-                Totals = Totals + (parseFloat(iten.totals) * parseFloat(iten.price));
+                Totals = Totals + (parseInt(iten.totals) * parseFloat(iten.price));
                 countItens++;
                 console.log(iten);
 
@@ -597,7 +597,6 @@ function checkout(){
     bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
     console.log('#checkout Totals '+Totals);
     updateLabelsTotalItems();
-    // document.getElementById('total-in-checkout').innerText='$ ' + Totals;
 }
 
 function refreshCart(it){
@@ -612,18 +611,18 @@ function refreshCart(it){
       {
          iten.totals=parseInt(it.value);
          console.log( parseInt(it.value) +' * ' + parseFloat(iten.price) +' : '+ parseFloat( parseInt(it.value) * parseFloat(iten.price) ).toFixed(2) );
-         totalValue = parseFloat(totalValue) + parseFloat( parseInt(it.value) * parseFloat(iten.price) );
+         // totalValue = parseFloat(totalValue) + parseFloat( parseInt(it.value) * parseFloat(iten.price) );
       }else{
-         totalValue = parseFloat(totalValue) + parseFloat( parseInt(iten.totals) * parseFloat(iten.price) );          
+         // totalValue = parseFloat(totalValue) + parseFloat( parseInt(iten.totals) * parseFloat(iten.price) );          
       }
       countItems+=parseInt(iten.totals); 
-      //totalValue = totalValue + parseFloat( parseInt(it.value) * parseFloat(it.price) ).toFixed(2);
+      totalValue = totalValue + ( parseInt(iten.totals) * parseFloat(iten.price) );
       cart_up.push(iten); 
       controlIndex++;
     });
     //UPDATE Labels
     document.getElementById('count-items').innerText = 'Items ' + countItems;
-    document.getElementById('total-in-checkout').innerText = '$ ' + parseFloat(totalValue).toFixed(2);
+    document.getElementById('total-in-checkout').innerText = '* $ ' + parseFloat(totalValue).toFixed(2);
     localStorage.setItem('cart',JSON.stringify(cart_up));
 }
 
@@ -641,15 +640,13 @@ function refreshCartSomeChage(it){
       {
          iten.totals=parseInt(it.value);
          console.log( parseInt(it.value) +' * ' + parseFloat(iten.price) +' : '+ parseFloat( parseInt(it.value) * parseFloat(iten.price) ).toFixed(2) );
-         totalValue = parseFloat(totalValue) + parseFloat( parseInt(it.value) * parseFloat(iten.price) );
-      }else{
-         totalValue = parseFloat(totalValue) + parseFloat( parseInt(iten.totals) * parseFloat(iten.price) );          
       }
       countItems+=parseInt(iten.totals); 
-      //totalValue = totalValue + parseFloat( parseInt(it.value) * parseFloat(it.price) ).toFixed(2);
+      totalValue = totalValue +  (parseInt(iten.totals) * parseFloat(iten.price)) ;
       cart_up.push(iten); 
       controlIndex++;
     });
+     totalValue = parseFloat(totalValue) + parseFloat(localStorage.getItem('truck'));
     //UPDATE Labels
     document.getElementById('count-items').innerText = 'Items ' + countItems;
     document.getElementById('total-in-checkout').innerText = '$ ' + parseFloat(totalValue).toFixed(2);
