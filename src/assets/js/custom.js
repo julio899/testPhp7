@@ -176,6 +176,14 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
         localStorage.setItem('cart', JSON.stringify(cart));
         localStorage.setItem('truck', parseFloat(bagedTruck.innerText.replace('$', '')).toFixed(2));
         if (document.getElementById('isLog') != null && document.getElementById('isLog').value == "true") {
+           
+            cart.push({
+                "name": 'truck',
+                "price": localStorage.getItem('truck'),
+                "id": 0
+            });
+            
+
             // # Display the Loader 
             document.getElementById('loader').classList.remove('no-display');
             var headers = new Headers();
@@ -417,7 +425,7 @@ function sendStars() {
             "comment": document.getElementById('comment-edit-m').value,
             "idProduct": productInEdition
         };
-        
+
 
         var headers = new Headers();
         headers.append('Accept', 'application/json');

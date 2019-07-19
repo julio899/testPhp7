@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 18, 2019 at 07:00 PM
+-- Generation Time: Jul 19, 2019 at 01:19 AM
 -- Server version: 5.7.21-1
 -- PHP Version: 7.2.4-1+b1
 
@@ -68,7 +68,18 @@ INSERT INTO `orders` (`id`, `itens`, `idUser`, `date`, `status`, `total`) VALUES
 (30, '[{\"name\":\"beer\",\"price\":\"2\",\"id\":\"3\"}]', 1, '2019-07-17 17:01:52', 1, 2),
 (31, '[{\"name\":\"water\",\"price\":\"1\",\"id\":\"4\"}]', 1, '2019-07-17 17:18:24', 1, 1),
 (32, '[{\"name\":\"cheese\",\"price\":\"3.75\",\"id\":\"5\"}]', 1, '2019-07-17 17:28:05', 1, 3.75),
-(33, '[{\"name\":\"cheese\",\"price\":\"3.75\",\"id\":\"5\"},{\"name\":\"cheese\",\"price\":\"3.75\",\"id\":\"5\"}]', 1, '2019-07-18 00:23:38', 1, 7.5);
+(33, '[{\"name\":\"cheese\",\"price\":\"3.75\",\"id\":\"5\"},{\"name\":\"cheese\",\"price\":\"3.75\",\"id\":\"5\"}]', 1, '2019-07-18 00:23:38', 1, 7.5),
+(34, '[{\"name\":\"apple\",\"price\":\"0.3\",\"id\":\"2\"}]', 2, '2019-07-18 18:29:29', 1, 0.3),
+(35, '[{\"name\":\"apple\",\"price\":\"0.3\",\"id\":\"2\"}]', 1, '2019-07-18 19:46:36', 1, 0.3),
+(36, '[{\"name\":\"water\",\"price\":\"1\",\"id\":\"4\"},{\"name\":\"beer\",\"price\":\"2\",\"id\":\"3\"}]', 3, '2019-07-18 23:19:55', 1, 3),
+(37, '[{\"name\":\"apple\",\"price\":\"0.3\",\"id\":\"2\"},{\"name\":\"water\",\"price\":\"1\",\"id\":\"4\"},{\"name\":\"apple\",\"price\":\"0.3\",\"id\":\"2\"}]', 1, '2019-07-18 23:38:01', 1, 1.6),
+(38, '[{\"name\":\"water\",\"price\":\"1\",\"id\":\"4\"}]', 1, '2019-07-18 23:45:49', 1, 1),
+(39, '[{\"name\":\"apple\",\"price\":\"0.3\",\"id\":\"2\"}]', 1, '2019-07-18 23:49:25', 1, 0.3),
+(40, '[{\"name\":\"water\",\"price\":\"1\",\"id\":\"4\"}]', 1, '2019-07-18 23:49:47', 1, 1),
+(41, '[{\"name\":\"apple\",\"price\":\"0.3\",\"id\":\"2\"}]', 1, '2019-07-18 23:52:16', 1, 0.3),
+(42, '[{\"name\":\"apple\",\"price\":\"0.3\",\"id\":\"2\"}]', 1, '2019-07-18 23:54:06', 1, 0.3),
+(43, '[{\"name\":\"apple\",\"price\":\"0.3\",\"id\":\"2\"}]', 1, '2019-07-18 23:56:25', 1, 0.3),
+(44, '[{\"name\":\"apple\",\"price\":\"0.3\",\"id\":\"2\"},{\"name\":\"apple\",\"price\":\"0.3\",\"id\":\"2\"},{\"name\":\"apple\",\"price\":\"0.3\",\"id\":\"2\"},{\"name\":\"water\",\"price\":\"1\",\"id\":\"4\"},{\"name\":\"cheese\",\"price\":\"3.75\",\"id\":\"5\"},{\"name\":\"truck\",\"price\":\"0.00\",\"id\":0}]', 1, '2019-07-19 00:16:23', 1, 5.65);
 
 -- --------------------------------------------------------
 
@@ -92,10 +103,11 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `status`, `price`, `score`, `stars`, `img`) VALUES
-(1, 'Stacy Adams Men\'s', 'The men\'s Vale Plain Toe Slip-On dress shoe features a patent upper, leather linings.', 'A', 125.5, '{\"star-1\":3,\"star-2\":0,\"star-3\":0,\"star-4\":0,\"star-5\":3}', 0, 'https://lgbtqnation-assets.s3.amazonaws.com/assets/2018/05/adidas-pride-shoe4-500x351.jpg'),
+(0, 'TRUCK', 'TAX', 'active', 0, '', 0, ''),
+(1, 'Stacy Adams Men\'s', 'The men\'s Vale Plain Toe Slip-On dress shoe features a patent upper, leather linings.', 'A', 125.5, '{\"star-1\":1,\"star-2\":0,\"star-3\":0,\"star-4\":0,\"star-5\":1}', 0, 'https://lgbtqnation-assets.s3.amazonaws.com/assets/2018/05/adidas-pride-shoe4-500x351.jpg'),
 (2, 'apple', '', 'A', 0.3, '{\"star-1\":1,\"star-2\":0,\"star-3\":0,\"star-4\":0,\"star-5\":1}', 2, 'https://images-na.ssl-images-amazon.com/images/I/81xQBb5jRzL._SY355_.jpg'),
 (3, 'beer', '', 'A', 2, '{\"star-1\":3,\"star-2\":0,\"star-3\":0,\"star-4\":0,\"star-5\":0}', 0, 'https://www.hola.com/imagenes/cocina/escuela/2012022457133/servir-correctamente-cerveza/0-264-108/cerveza_botellin_-z.jpg'),
-(4, 'water', '', 'A', 1, '{\"star-1\":3,\"star-2\":0,\"star-3\":0,\"star-4\":0,\"star-5\":3}', 0, 'https://cdn.totalcode.com.co/homesentry/product-zoom/es/botella-de-agua-vidrio-agua-del-nacimiento-500ml-1.jpg'),
+(4, 'water', '', 'A', 1, '{\"star-1\":0,\"star-2\":1,\"star-3\":0,\"star-4\":0,\"star-5\":0}', 0, 'https://cdn.totalcode.com.co/homesentry/product-zoom/es/botella-de-agua-vidrio-agua-del-nacimiento-500ml-1.jpg'),
 (5, 'cheese', '', 'A', 3.75, '{\"star-1\":0,\"star-2\":1,\"star-3\":0,\"star-4\":0,\"star-5\":0}', 0, 'https://img2.gratispng.com/20180712/hot/kisspng-who-moved-my-cheese-swiss-cheese-toast-manchego-cheese-pull-5b47819ed68056.6411361815314128948786.jpg');
 
 -- --------------------------------------------------------
@@ -118,7 +130,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `status`, `type`, `balance`) VALUES
-(1, 'julio899@gmail.com', '51c30cf5b566235f70673a8092853fa4b0bb60e4', 'active', 'A', 100),
+(1, 'julio899@gmail.com', '51c30cf5b566235f70673a8092853fa4b0bb60e4', 'active', 'A', 41.15),
 (2, 'user1@user.com', '51c30cf5b566235f70673a8092853fa4b0bb60e4', 'active', 'A', 200),
 (3, 'user@user.com', '51c30cf5b566235f70673a8092853fa4b0bb60e4', 'active', 'A', 100),
 (4, 'user2@user.com', '51c30cf5b566235f70673a8092853fa4b0bb60e4', 'active', 'A', 100),
@@ -142,6 +154,19 @@ CREATE TABLE `votes` (
   `commentary` varchar(300) COLLATE utf8_spanish_ci NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Dumping data for table `votes`
+--
+
+INSERT INTO `votes` (`id`, `id_product`, `id_user`, `stars`, `commentary`, `date`) VALUES
+(1, 4, 1, 2, '3stars', '2019-07-18 20:46:08'),
+(2, 1, 1, 5, '', '2019-07-18 23:10:52'),
+(3, 2, 1, 3, '', '2019-07-18 23:11:12'),
+(4, 1, 3, 1, 'malos no me gustaron', '2019-07-18 23:17:18'),
+(5, 2, 3, 5, 'Saludable', '2019-07-18 23:18:19'),
+(6, 3, 3, 1, 'mala para la salud', '2019-07-18 23:18:51'),
+(7, 4, 3, 5, 'Rica y saludable', '2019-07-18 23:20:46');
 
 --
 -- Indexes for dumped tables
@@ -184,13 +209,13 @@ ALTER TABLE `votes`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -202,7 +227,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `votes`
 --
 ALTER TABLE `votes`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables

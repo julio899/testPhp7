@@ -8,92 +8,11 @@ class Products
     }
 
     /**
-     * @param $scores
+     * @param $enlace
+     * @param $idProduct
+     * @return mixed
      */
-    public static function calculateStars($scores)
-    {
-        $starsData  = (json_decode($scores, true));
-        $totalVotes = 0;
-
-        foreach ($starsData as $keyStar => $score)
-        {
-            # calculate total he votes of this product
-            $totalVotes += intval($score);
-        }
-        // Calculate %
-        $porcentages = [];
-        $totalStars  = 0;
-
-        foreach ($starsData as $keyStar => $score)
-        {
-            if (intval($score) > 0)
-            {
-                $porcentageInStar = number_format((($score * 100) / $totalVotes), 2);
-                $stars            = number_format(($score * $porcentageInStar), 1) / 100;
-                $totalStars += number_format($stars, 2);
-                array_push($porcentages, array(
-                    $keyStar . 'p' => $porcentageInStar,
-                    'stars'        => $stars,
-                ));
-            }
-        }
-
-        $is_absolute = false;
-        # is is 100% of the votes
-        if (count($porcentages) === 1)
-        {
-            foreach ($porcentages[0] as $key => $value)
-            {
-                if (intval($value) == 100)
-                {
-                    $number      = str_replace('star-', '', $key);
-                    $number      = trim(str_replace('p', '', $number));
-                    $totalStars  = $number;
-                    $is_absolute = true;
-                }
-            }
-        }
-        # Max of Star in screen 5
-        if ($totalStars > 4.75 && !$is_absolute)
-        {
-            $totalStars = 5;
-        }
-        return $totalStars;
-        /**
-         * Documentation the logic by Julio Vinachi
-         * ----------------------------------------
-        var_dump(json_encode(
-        array(
-        'star-1' => 3,
-        'star-2' => 0,
-        'star-3' => 0,
-        'star-4' => 0,
-        'star-5' => 3,
-        )
-        ));
-        total 6 Votes  -> 100%
-        3* (of 5 star) -> ? => 50% de los votos son 5 star
-
-        50%  50%
-         *****+++++
-        total 6 Votes
-
-        5 star -> 100% votes completed in 5 star
-        but
-        5 star -> 50% votes completed in 5 star
-        1 star -> 50% votes completed in 5 star
-
-        100 -> 50
-        5*  -> (2.5*)
-
-        100 -> 50
-        1*  -> (0.5*)
-
-        Total star ( 2.5 + 0.5 ) = 3*
-         */
-    }
-
-    public static function calculateStars2($enlace, $idProduct)
+    public static function calculateStars($enlace, $idProduct)
     {
 
         $data_votes      = self::executeSql($enlace, 'SELECT * FROM `votes` WHERE `id_product` = ' . $idProduct);
@@ -220,10 +139,10 @@ class Products
      */
     public static function getProducts($enlace)
     {
-        $products = self::executeSql($enlace, 'SELECT * FROM `products`');
+        $products = self::executeSql($enlace, 'SELECT * FROM `products` WHERE `id` > 0');
         foreach ($products as $key => $p)
         {
-            $products[$key]['starDinamic'] = self::calculateStars2($enlace, $p['id']); // self::calculateStars($p['score']);
+            $products[$key]['starDinamic'] = self::calculateStars($enlace, $p['id']); // self::calculateStars($p['score']);
             $products[$key]['starByUser']  = self::getClasificationByUser($enlace, $p['id']);
         }
         return $products;
@@ -249,15 +168,20 @@ class Products
         {
             $total += floatval($value['price']);
         }
-
+        // add Truck Tax
+        // $total += floatval($itensArray['truck']);
         if ($_SESSION['acc_balance'] >= $total)
         {
+            $balance = number_format((floatval($_SESSION['acc_balance']) - $total), 2, '.', '');
             // SQL UPDATE BD
             $resp = self::executeSqlOnlyPush($enlace, "INSERT INTO `orders` (`id`, `itens`, `idUser`, `date`, `status`, `total`) VALUES (NULL, '" . $itensTxt . "', '" . $_SESSION['acc_id'] . "', CURRENT_TIMESTAMP, '1','" . $total . "')");
-            if ($resp)
+
+            $resp2 = self::executeSqlOnlyPush($enlace, "UPDATE `users` SET `balance` = '$balance' WHERE `users`.`id` = " . $_SESSION['acc_id'] . "; ");
+
+            if ($resp2 == $resp)
             {
                 // Now refresh data
-                $_SESSION['acc_balance'] = number_format((floatval($_SESSION['acc_balance']) - $total), 2, '.', '');
+                $_SESSION['acc_balance'] = $balance;
                 $status                  = 'OK';
             }
         }

@@ -58,7 +58,12 @@ class Main
             $indexFromLocal = 1;
         }
 
-        if ($_SESSION['uri'][$indexFromLocal] == 'logout')
+        if (!isset($_SESSION['uri'][0]))
+        {
+            new Display('LandingPage', $this->parameters);
+            exit();
+        }
+        else if ($_SESSION['uri'][$indexFromLocal] == 'logout')
         {
 
             $_SESSION = null;
@@ -272,7 +277,8 @@ class Main
 
                 }
 
-                //echo json_encode($postIdentifierArr[0], true)
+                //echo json_encode($postIdentifierArr[0], true);
+
                 $this->productsController->processing($this->enlace, $postIdentifierArr[0]);
 
                 break;
