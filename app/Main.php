@@ -51,7 +51,14 @@ class Main
             'products' => $this->products,
         ];
 
-        if (isset($_SESSION['uri'][0]) && $_SESSION['uri'][0] == 'logout')
+        $indexFromLocal = 0;
+
+        if (isset($_SESSION['uri'][1]))
+        {
+            $indexFromLocal = 1;
+        }
+
+        if ($_SESSION['uri'][$indexFromLocal] == 'logout')
         {
 
             $_SESSION = null;
@@ -60,19 +67,19 @@ class Main
             header('Location: ' . URL_HOST . 'home');
             exit();
         }
-        else if (isset($_SESSION['uri'][1]) && $_SESSION['uri'][1] == 'sendStars')
+        else if ($_SESSION['uri'][$indexFromLocal] == 'sendStars')
         {
             $dt = self::getInArray($this->post_params);
             $this->productsController->saveClasificationByUser($this->enlace, $dt);
         }
-        else if (isset($_SESSION['uri'][1]) && $_SESSION['uri'][1] == 'updateStar')
+        else if ($_SESSION['uri'][$indexFromLocal] == 'updateStar')
         {
             $this->productsController->updateClasificationByUser(
                 $this->enlace,
                 self::getInArray($this->post_params)
             );
         }
-        else if (isset($_SESSION['uri'][1]) && $_SESSION['uri'][1] == 'getCommentaries')
+        else if ($_SESSION['uri'][$indexFromLocal] == 'getCommentaries')
         {
             $postIdentifierArr = array();
 
@@ -87,7 +94,7 @@ class Main
             $this->productsController->getCommentsProduct($this->enlace, $dt['id']);
 
         }
-        else if (isset($_SESSION['uri'][0]) && $_SESSION['uri'][0] == 'processing')
+        else if ($_SESSION['uri'][$indexFromLocal] == 'processing')
         {
             $postIdentifierArr = array();
 
@@ -103,7 +110,7 @@ class Main
             }
             $this->productsController->processing($this->enlace, $postIdentifierArr[0]);
         }
-        else if (isset($_SESSION['uri'][0]) && $_SESSION['uri'][0] == 'login')
+        else if ($_SESSION['uri'][$indexFromLocal] == 'login')
         {
             $_SESSION['page'] = 'login';
             $this->toPage('login');
@@ -119,8 +126,10 @@ class Main
             {
                 Controladores\Session::logout();
             }
-
-            header('Location: ' . URL_HOST);
+            else
+            {
+                header('Location: ' . URL_HOST);
+            }
 
         }
         else if ($_SESSION['permitted'])

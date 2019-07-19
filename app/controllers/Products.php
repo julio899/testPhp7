@@ -301,7 +301,7 @@ class Products
     {
         $status = '';
         // SQL UPDATE BD
-        $resp = self::executeSqlOnlyPush($enlace, "INSERT INTO `votes` (`id`, `id_product`, `id_user`, `stars`, `commentary`, `date`) VALUES (NULL, '" . $dt['idProduct'] . "', '" . $_SESSION['acc_id'] . "', '" . $dt['stars'] . "', '" . $dt['comment'] . "', CURRENT_TIMESTAMP);");
+        $resp = self::executeSqlOnlyPush($enlace, "INSERT INTO `votes` (`id`, `id_product`, `id_user`, `stars`, `commentary`, `date`) VALUES (NULL, '" . $dt['idProduct'] . "', '" . $_SESSION['acc_id'] . "', '" . $dt['stars'] . "', '" . str_replace('_', ' ', $dt['comment']) . "', CURRENT_TIMESTAMP);");
         if ($resp)
         {
             $status = 'OK';
@@ -336,7 +336,7 @@ class Products
     {
         $status = '';
         // SQL UPDATE BD
-        $resp = self::executeSqlOnlyPush($enlace, "UPDATE `votes` SET `commentary` = '" . $data['comment'] . "' , `stars` = " . $data['stars'] . " WHERE `votes`.`id_product` = " . $data['idProduct'] . " AND `votes`.`id_user` = " . $_SESSION['acc_id'] . ";");
+        $resp = self::executeSqlOnlyPush($enlace, "UPDATE `votes` SET `commentary` = '" . str_replace('_', ' ', $data['comment']) . "' , `stars` = " . $data['stars'] . " WHERE `votes`.`id_product` = " . $data['idProduct'] . " AND `votes`.`id_user` = " . $_SESSION['acc_id'] . ";");
         if ($resp)
         {
             $status = 'OK';

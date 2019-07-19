@@ -49,6 +49,26 @@ for (var i = 0; i < countBtns; i++) {
             Totals = parseFloat(parseFloat(Totals) + parseFloat(btnAdd.getAttribute('data-price'))).toFixed(2);
             containerCartList.prepend(newIten);
             bagedTotal.innerText = '$ ' + Totals;
+
+            var cart = [];
+            for (var i = 0; i < document.getElementsByClassName('new-iten-add').length; i++) {
+                var currentIten = document.getElementsByClassName('new-iten-add').item(i);
+                cart.push({
+                    "name": currentIten.getAttribute('data-name'),
+                    "price": currentIten.getAttribute('data-price'),
+                    "id": currentIten.getAttribute('data-id')
+                });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            if(localStorage.getItem('truck')){
+                localStorage.setItem('truck', parseFloat(bagedTruck.innerText.replace('$', '')).toFixed(2));
+            }else{
+
+                localStorage.setItem('truck', 0.00);
+                console.log('#no truck');
+            }
+
+
             document.getElementById('cartIcon').classList.add('animated', 'wobble', 'cartAdd');
             setTimeout(() => {
                 btnAdd.classList.remove('animated', 'wobble');
@@ -85,7 +105,7 @@ document.getElementById('pickupContainer').addEventListener('click', (evt) => {
             }
         }
         if (idName === 'ups' && !upsCheck) {
-            Totals = parseFloat(parseFloat(Totals) + 5);
+            // Totals = parseFloat(parseFloat(Totals) + 5);
             bagedTruck.innerText = '$' + parseFloat(5).toFixed(2);
             upsCheck = true;
         } else if (idName !== 'ups' && upsCheck && Totals > 0) {
@@ -94,7 +114,7 @@ document.getElementById('pickupContainer').addEventListener('click', (evt) => {
             upsCheck = false;
         }
         bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
-        console.log(idName, Totals);
+        console.log(idName, Totals,upsCheck);
         if (idName == 'pickup') {
             localStorage.setItem('truck', 0.00);
             bagedTruck.innerText = '$ 0';
@@ -123,6 +143,7 @@ document.getElementById('pickupContainer').addEventListener('click', (evt) => {
     setTimeout(() => {
         pickupActive = true;
     }, 1000);
+    checkIfExistCart();
 });
 var enableBtnCart = true;
 // Event Btn
@@ -260,6 +281,10 @@ function debounce(func, wait, immediate) {
 };
 
 function checkIfExistCart() {
+   // Cleaning
+    document.querySelectorAll('.dropdown-item.new-iten-add').forEach((e)=>{ 
+       e.remove();
+   });
     if (localStorage.getItem('cart') != null) {
         var cart = JSON.parse(localStorage.getItem('cart'));
         Totals = 0;
@@ -285,10 +310,11 @@ function checkIfExistCart() {
             document.getElementById('ups').classList.add('cartAdd');
             document.getElementById('pickup').classList.remove('cartAdd');
         }
-        Totals = parseFloat(Totals) + parseFloat(localStorage.getItem('truck'));
         bagedTruck.innerText = '$ ' + localStorage.getItem('truck');
+        Totals += parseFloat(localStorage.getItem('truck'));
     }
     bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
+    console.log('#Antes '+Totals);
 }
 
 function getCommentaries(pID) {
@@ -354,7 +380,6 @@ function loaderOff() {
     var countLoaders = document.getElementsByClassName('loader2').length;
     for (var c = 0; c < countLoaders; c++) {
         document.getElementsByClassName('loader2').item(c).classList.add('no-display');
-        console.log(c);
     }
 }
 
@@ -392,7 +417,8 @@ function sendStars() {
             "comment": document.getElementById('comment-edit-m').value,
             "idProduct": productInEdition
         };
-        console.log(data);
+        
+
         var headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -400,7 +426,7 @@ function sendStars() {
             method: 'POST',
             credentials: 'include',
             headers: headers,
-            body: JSON.stringify(data),
+            body: JSON.stringify(data)
         }).then(resp => {
             // # Hidden the Loader 
             loaderOff();
