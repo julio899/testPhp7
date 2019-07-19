@@ -45,6 +45,9 @@ header.jumbotron.my-4{
 .cartAdd{
 	color: #beff00;
 }
+.cartAdd2{
+	color:#00dc8b;
+}
 .new-iten-add{
 	background-color: #eee;
     color: #000!important;
@@ -78,6 +81,12 @@ div#container-cart-list{
 	font-size: 0.9em;
 	margin-top: 0.1em;
 }
+.new-iten-add>span.menos-checkout{
+	position: absolute;
+	right: 20px;
+	font-size: 0.9em;
+	margin-top: 0.1em;
+}
 .new-iten-add>span.badge.badge-success.badge-pill{
 	margin-right: 10px;
 }
@@ -89,7 +98,7 @@ div#container-cart-list{
 .star-yellow{
 	color: #ffcf0c;
 }
-span#btn-pay{
+span#btn-pay,span#btn-checkout{
 	width: 96%;
 	margin: 2% 2% 0 2%;
 	text-transform: uppercase;
@@ -102,6 +111,12 @@ span#btn-pay:hover,
 span#btn-pay:focus{
 	background-color: #3de68f;
 	color: #fff;
+	text-shadow: #c1c1c1 1px 1px 2px;
+}
+span#btn-checkout:hover,
+span#btn-checkout:focus{    
+	background-color: #b3ff6b;
+    color: #554f4f;
 	text-shadow: #c1c1c1 1px 1px 2px;
 }
 
@@ -255,4 +270,17 @@ div#loader{
     margin: 10px 0px;
     border-radius: 7px;
 }
+
+.countCustom{
+    max-width: 50px;
+    float: right;
+    margin-right: 21px;
+    height: 34px;
+}
+#ups2{
+	float: left;
+	margin-left: -250px;
+}
+#total-in-checkout,#count-items{
+	font-size: 2em;
 }

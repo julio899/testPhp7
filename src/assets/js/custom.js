@@ -10,6 +10,10 @@ bagedTruck = document.getElementById('baged-truck');
 bagedTotal = document.getElementById('baged-total');
 // set truck to pickup cost $0
 document.getElementById('pickup').classList.add('cartAdd');
+
+document.getElementById('btn-checkout').addEventListener('click',()=>{
+    checkout();
+});
 // init tooltips
 setTimeout(() => {
     $('[data-toggle="tooltip"]').tooltip({
@@ -80,6 +84,7 @@ for (var i = 0; i < countBtns; i++) {
                 btnAddEnable = true;
             }, 1000);
         }
+        updateLabelsTotalItems();
     });
 }
 var upsCheck = false;
@@ -270,6 +275,7 @@ function removeIten(evt) {
     setTimeout(() => {
         enableRemove = true;
     }, 1100);
+    updateLabelsTotalItems();
 }
 
 function debounce(func, wait, immediate) {
@@ -503,4 +509,152 @@ function updateStar() {
     }).catch(err => {
         alertify.error(err);
     });
+}
+
+function checkout(){
+
+    if (localStorage.getItem('cart') != null) {
+        var cart = JSON.parse(localStorage.getItem('cart'));
+        var containerCartList = document.getElementById('list-commentaries-checkout');
+            containerCartList.innerHTML='';
+        Totals = 0;
+        countItens = 0;
+        cartCompact = [];
+        cart.map((iten) => {
+            if (iten.id != undefined) {
+                // --------------------
+                var exist = false;
+                var countExist = 0;
+                cartCompact.map((it)=>{
+                    if(it.id==iten.id)
+                    {
+                        exist=true;
+                        countExist ++;
+                    }
+                });
+            
+                if(!exist)
+                {
+                    iten.totals = 1;
+                    cartCompact.push(iten);
+                }else{
+                    iten.totals = countExist;
+                    var indexControl=0;
+                    cartCompact.map((it)=>{
+                        if(it.id==iten.id)
+                        {
+                            cartCompact[indexControl].totals++;
+                        }
+                        indexControl++;
+                    });
+
+                }
+                // --------------------
+            }
+        });
+
+
+        console.log(cartCompact);
+        localStorage.setItem('cart',JSON.stringify(cartCompact));
+
+        cartCompact.map((iten)=>{
+
+                // New iten to add
+                var newIten = document.createElement('a');
+                newIten.innerHTML = '<label class="pull-left">' + iten.name + '</label>  <input value="' + iten.totals + '" data-id="'+iten.id+'" onchange="refreshCart(this)" min="1" max="100" class="countCustom" type="number"><span class="badge badge-success badge-pill">$' + iten.price + '</span> <span class="badge badge-dark badge-pill menos-checkout" data-price="' + iten.price + '" onclick="removeIten(this)"><i class="fas fa-times"></i></span>';
+                newIten.href = '#';
+                newIten.setAttribute('data-name', iten.name);
+                newIten.setAttribute('data-price', iten.price);
+                newIten.setAttribute('data-id', iten.id);
+                newIten.classList.add('dropdown-item', 'new-iten-add');
+                containerCartList.prepend(newIten);
+                Totals = parseFloat(Totals) + parseFloat(iten.price);
+                countItens++;
+
+        });
+    }
+    if (localStorage.getItem('truck') != null) {
+        if (parseFloat(localStorage.getItem('truck')) > 0) {
+            console.log('changed icons Truck')
+            document.getElementById('ups').classList.add('cartAdd');
+            document.getElementById('pickup').classList.remove('cartAdd');
+        }
+        bagedTruck.innerText = '$ ' + localStorage.getItem('truck');
+        Totals += parseFloat(localStorage.getItem('truck'));
+    }
+    document.getElementById('count-items').innerText = 'Items '+ countItens;
+    bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
+    console.log('#checkout Totals '+Totals);
+    updateLabelsTotalItems();
+}
+
+function refreshCart(it){
+
+    var cart = JSON.parse(localStorage.getItem('cart'));
+    var countItems = 0;
+    var controlIndex = 0;
+    var totalValue = 0;
+    console.log('id: '+it.getAttribute('data-id'));
+    console.log('count: '+it.value);
+    cart_up=[];
+    cart.map((iten)=>{
+      if(iten.id==it.getAttribute('data-id'))
+      {
+         iten.totals=parseInt(it.value);
+         console.log( parseInt(it.value) +' * ' + parseFloat(iten.price) +' : '+ parseFloat( parseInt(it.value) * parseFloat(iten.price) ).toFixed(2) );
+         totalValue = parseFloat(totalValue) + parseFloat( parseInt(it.value) * parseFloat(iten.price) );
+      }else{
+         totalValue = parseFloat(totalValue) + parseFloat( parseInt(iten.totals) * parseFloat(iten.price) );          
+      }
+      countItems+=parseInt(iten.totals); 
+      //totalValue = totalValue + parseFloat( parseInt(it.value) * parseFloat(it.price) ).toFixed(2);
+      cart_up.push(iten); 
+      controlIndex++;
+    });
+    //UPDATE Labels
+    document.getElementById('count-items').innerText = 'Items ' + countItems;
+    document.getElementById('total-in-checkout').innerText = '$ ' + parseFloat(totalValue).toFixed(2);
+    localStorage.setItem('cart',JSON.stringify(cart_up));
+}
+
+function updateLabelsTotalItems(){
+    var countItens = 0;
+        Totals = 0;
+    if (localStorage.getItem('cart') != null) {
+        var cart = JSON.parse(localStorage.getItem('cart'));
+        cart.map((iten) => {
+            if (iten.id != undefined) {
+                Totals = parseFloat(Totals) + parseFloat(iten.price);
+                countItens++;
+            }
+        });
+    }
+    
+    document.getElementById('pickup').classList.remove('cartAdd');
+    document.getElementById('pickup2').classList.remove('cartAdd2');
+    document.getElementById('ups').classList.remove('cartAdd');
+    document.getElementById('ups2').classList.remove('cartAdd2');
+
+    if (localStorage.getItem('truck') != null) {
+        var countTruck = localStorage.getItem('truck');
+        Totals += parseFloat(localStorage.getItem('truck'));  
+        document.getElementById('baged-truck').innerText='$ ' + countTruck;
+        document.getElementById('baged-truck2').innerText='$ ' + countTruck;
+
+        if( parseInt(countTruck)  > 0 )
+        {
+            document.getElementById('ups').classList.add('cartAdd');
+            document.getElementById('ups2').classList.add('cartAdd2');
+        }else{
+            document.getElementById('pickup').classList.add('cartAdd');
+            document.getElementById('pickup2').classList.add('cartAdd2');
+        }
+
+    }else{
+        document.getElementById('baged-truck').innerText='$ 0.00';   
+        document.getElementById('baged-truck2').innerText='$ 0.00';     
+    }
+    
+    document.getElementById('total-in-checkout').innerText = '$ '+ parseFloat(Totals).toFixed(2);
+    document.getElementById('count-items').innerText = 'Items '+ countItens;
 }

@@ -31,7 +31,8 @@
 
                 <a class="dropdown-item" href="#">Total & Detaills <span id="baged-total" class="badge badge-warning badge-pill baged-total">$0.00</span></a>
 
-                <span id="btn-pay" class="dropdown-item badge badge-success form-control btn-pay">Buy</span>
+                <span id="btn-checkout" class="dropdown-item badge badge-warning form-control btn-checkout" data-toggle="modal" data-target="#checkout">Checkout</span>
+
               </div>
 
             </div>
@@ -223,6 +224,42 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- CheckOut -->
+<div class="modal fade" id="checkout" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">CheckOut</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body content-commentaries">
+
+         <ul id="list-commentaries-checkout" class="list-group">
+        </ul>
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <i id="pickup2" class="fas fa-truck-pickup pickup" data-toggle="tooltip" data-placement="top" title="pick up"></i>
+                  <i id="ups2" class="fas fa-truck pickup" data-toggle="tooltip" data-placement="top" title="UPS"></i>
+                  <span id="baged-truck2" class="badge badge-secondary badge-pill baged-pick-up">$0.00</span>
+
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Total
+            <span id="count-items" class="badge badge-primary badge-pill">Items 01</span>
+            <span id="total-in-checkout" class="badge badge-success badge-pill">$0.00</span>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <span id="btn-pay" class="dropdown-item badge badge-success form-control btn-pay">Buy</span>
       </div>
     </div>
   </div>
