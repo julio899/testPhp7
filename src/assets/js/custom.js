@@ -38,32 +38,71 @@ for (var i = 0; i < countBtns; i++) {
             var containerCartList = document.getElementById('container-cart-list');
             var btnAdd = evt.currentTarget;
             btnAdd.offsetParent.classList.add('animated', 'heartBeat', 'sobreposition');
-            // New iten to add
-            var newIten = document.createElement('a');
-            newIten.innerHTML = '<label class="pull-left">' + btnAdd.getAttribute('data-name') + '</label>  <span class="badge badge-success badge-pill">$' + btnAdd.getAttribute('data-price') + '</span> <span class="badge badge-dark badge-pill menos" data-price="' + btnAdd.getAttribute('data-price') + '" onclick="removeIten(this)"><i class="fas fa-times"></i></span>';
-            newIten.href = '#';
-            newIten.setAttribute('data-name', btnAdd.getAttribute('data-name'));
-            newIten.setAttribute('data-price', btnAdd.getAttribute('data-price'));
-            newIten.setAttribute('data-id', btnAdd.getAttribute('data-id'));
-            newIten.classList.add('dropdown-item', 'new-iten-add');
-            newIten.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-            });
+
             Totals = parseFloat(parseFloat(Totals) + parseFloat(btnAdd.getAttribute('data-price'))).toFixed(2);
-            containerCartList.prepend(newIten);
             bagedTotal.innerText = '$ ' + Totals;
 
-            var cart = [];
-            for (var i = 0; i < document.getElementsByClassName('new-iten-add').length; i++) {
-                var currentIten = document.getElementsByClassName('new-iten-add').item(i);
-                cart.push({
-                    "name": currentIten.getAttribute('data-name'),
-                    "price": currentIten.getAttribute('data-price'),
-                    "id": currentIten.getAttribute('data-id')
-                });
+            // -------------------
+            if (localStorage.getItem('cart') == null) 
+            {
+                localStorage.setItem('cart',JSON.stringify([]));
             }
+            var cart = JSON.parse(localStorage.getItem('cart'));
+            var cart_up = [];
+            var control=0;
+            var control_flag=0;
+            var exist=false;
+            var uniquesFilter=[];
+
+
+            cart.map((iten) => {
+                if (iten.id != undefined && iten.id == btnAdd.getAttribute('data-id') && !exist) {
+                    exist = true;
+                    control_flag=control;
+                }
+                control++;
+            });
+
+            
+            if(!exist)
+            {
+
+                cart.push({
+                    "name": btnAdd.getAttribute('data-name'),
+                    "price": btnAdd.getAttribute('data-price'),
+                    "id": btnAdd.getAttribute('data-id'),
+                    "totals":1
+                });
+
+                // New iten to add
+                var newIten = document.createElement('a');
+                newIten.id='p-'+btnAdd.getAttribute('data-id');
+                newIten.innerHTML = '<label class="pull-left">' + btnAdd.getAttribute('data-name') + '</label>  <span class="badge badge-success badge-pill">$' + btnAdd.getAttribute('data-price') + '</span> <span id="pc-'+btnAdd.getAttribute('data-id')+'" class="badge badge-info badge-pill pc">x1</span>  <span class="badge badge-dark badge-pill menos" data-price="' + btnAdd.getAttribute('data-price') + '" onclick="removeIten(this)"><i class="fas fa-times"></i></span>';
+                newIten.href = '#';
+                newIten.setAttribute('data-name', btnAdd.getAttribute('data-name'));
+                newIten.setAttribute('data-price', btnAdd.getAttribute('data-price'));
+                newIten.setAttribute('data-id', btnAdd.getAttribute('data-id'));
+                newIten.classList.add('dropdown-item', 'new-iten-add');
+                newIten.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+                containerCartList.prepend(newIten);
+
+
+            }else{
+                cart[control_flag].totals = parseInt( cart[control_flag].totals )+1;
+                if(document.getElementById("pc-"+btnAdd.getAttribute('data-id')))
+                {
+                    document.getElementById("pc-"+btnAdd.getAttribute('data-id')).innerText = 'x'+cart[control_flag].totals;
+                }
+            }
+
+            console.log(cart);
             localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart(cart);
+            // -------------------            
+
             if(localStorage.getItem('truck')){
                 localStorage.setItem('truck', parseFloat(bagedTruck.innerText.replace('$', '')).toFixed(2));
             }else{
@@ -164,11 +203,13 @@ document.getElementById('touch-cart-list').addEventListener('click', (e) => {
 var enableBtnPay = true;
 //Event click to btn-pay
 document.querySelector('#btn-pay').addEventListener('click', debounce(function() {
-    if (document.getElementsByClassName('new-iten-add').length == 0) {
+    var cart = JSON.parse(localStorage.getItem('cart'));
+    if (cart.length == 0) {
         alertify.alert('We are Sorry', 'Your need add some item to the cart!', function() {
             alertify.success('Cart is Empty');
         });
     } else {
+        /*
         var cart = [];
         for (var i = 0; i < document.getElementsByClassName('new-iten-add').length; i++) {
             var currentIten = document.getElementsByClassName('new-iten-add').item(i);
@@ -177,7 +218,9 @@ document.querySelector('#btn-pay').addEventListener('click', debounce(function()
                 "price": currentIten.getAttribute('data-price'),
                 "id": currentIten.getAttribute('data-id')
             });
-        }
+        }*/
+
+
         localStorage.setItem('cart', JSON.stringify(cart));
         localStorage.setItem('truck', parseFloat(bagedTruck.innerText.replace('$', '')).toFixed(2));
         if (document.getElementById('isLog') != null && document.getElementById('isLog').value == "true") {
@@ -561,7 +604,7 @@ function checkout(){
 
                 // New iten to add
                 var newIten = document.createElement('a');
-                newIten.innerHTML = '<label class="pull-left">' + iten.name + '</label>  <input value="' + iten.totals + '" data-id="'+iten.id+'" onchange="refreshCart(this)" min="1" max="100" class="countCustom" type="number"><span class="badge badge-success badge-pill">$' + iten.price + '</span> <span class="badge badge-dark badge-pill menos-checkout" data-price="' + iten.price + '" onclick="removeIten(this)"><i class="fas fa-times"></i></span>';
+                newIten.innerHTML = '<label class="pull-left">' + iten.name + '</label>  <input value="' + iten.totals + '" data-id="'+iten.id+'" onchange="refreshCartSomeChage(this)" min="1" max="100" class="countCustom" type="number"><span class="badge badge-success badge-pill">$' + iten.price + '</span> <span class="badge badge-dark badge-pill menos-checkout" data-price="' + iten.price + '" onclick="removeIten(this)"><i class="fas fa-times"></i></span>';
                 newIten.href = '#';
                 newIten.setAttribute('data-name', iten.name);
                 newIten.setAttribute('data-price', iten.price);
@@ -589,6 +632,33 @@ function checkout(){
 }
 
 function refreshCart(it){
+
+    var cart = JSON.parse(localStorage.getItem('cart'));
+    var countItems = 0;
+    var controlIndex = 0;
+    var totalValue = 0;
+    cart_up=[];
+    cart.map((iten)=>{
+      if(iten.id)
+      {
+         iten.totals=parseInt(it.value);
+         console.log( parseInt(it.value) +' * ' + parseFloat(iten.price) +' : '+ parseFloat( parseInt(it.value) * parseFloat(iten.price) ).toFixed(2) );
+         totalValue = parseFloat(totalValue) + parseFloat( parseInt(it.value) * parseFloat(iten.price) );
+      }else{
+         totalValue = parseFloat(totalValue) + parseFloat( parseInt(iten.totals) * parseFloat(iten.price) );          
+      }
+      countItems+=parseInt(iten.totals); 
+      //totalValue = totalValue + parseFloat( parseInt(it.value) * parseFloat(it.price) ).toFixed(2);
+      cart_up.push(iten); 
+      controlIndex++;
+    });
+    //UPDATE Labels
+    document.getElementById('count-items').innerText = 'Items ' + countItems;
+    document.getElementById('total-in-checkout').innerText = '$ ' + parseFloat(totalValue).toFixed(2);
+    localStorage.setItem('cart',JSON.stringify(cart_up));
+}
+
+function refreshCartSomeChage(it){
 
     var cart = JSON.parse(localStorage.getItem('cart'));
     var countItems = 0;

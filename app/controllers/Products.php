@@ -166,7 +166,10 @@ class Products
         $itensArray = json_decode($itensTxt, true);
         foreach ($itensArray as $key => $value)
         {
-            $total += floatval($value['price']);
+            if (isset($value['totals']))
+            {
+                $total = $total + (floatval($value['price']) * intval($value['totals']));
+            }
         }
         // add Truck Tax
         // $total += floatval($itensArray['truck']);

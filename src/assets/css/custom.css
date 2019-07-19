@@ -284,3 +284,6 @@ div#loader{
 #total-in-checkout,#count-items{
 	font-size: 2em;
 }
+.pc{
+	margin-right: 1em;
+}
