@@ -348,14 +348,18 @@ function checkIfExistCart() {
         cart.map((iten) => {
             if (iten.id != undefined) {
                 var containerCartList = document.getElementById('container-cart-list');
+
                 // New iten to add
                 var newIten = document.createElement('a');
-                newIten.innerHTML = '<label class="pull-left">' + iten.name + '</label>  <span class="badge badge-success badge-pill">$' + iten.price + '</span> <span class="badge badge-dark badge-pill menos" data-price="' + iten.price + '" onclick="removeIten(this)"><i class="fas fa-times"></i></span>';
+                newIten.id='p-'+iten.id;
+                newIten.innerHTML = '<label class="pull-left">' + iten.name + '</label>  <span class="badge badge-success badge-pill">$' + iten.price  + '</span> <span id="pc-'+iten.id+'" class="badge badge-info badge-pill pc">x'+iten.totals+'</span>  <span class="badge badge-dark badge-pill menos" data-price="' + iten.price+ '" onclick="removeIten(this)"><i class="fas fa-times"></i></span>';
                 newIten.href = '#';
                 newIten.setAttribute('data-name', iten.name);
                 newIten.setAttribute('data-price', iten.price);
                 newIten.setAttribute('data-id', iten.id);
                 newIten.classList.add('dropdown-item', 'new-iten-add');
+
+
                 containerCartList.prepend(newIten);
                 Totals = parseFloat(Totals) + parseFloat(iten.price);
             }
@@ -562,57 +566,21 @@ function checkout(){
             containerCartList.innerHTML='';
         Totals = 0;
         countItens = 0;
-        cartCompact = [];
-        cart.map((iten) => {
-            if (iten.id != undefined) {
-                // --------------------
-                var exist = false;
-                var countExist = 0;
-                cartCompact.map((it)=>{
-                    if(it.id==iten.id)
-                    {
-                        exist=true;
-                        countExist ++;
-                    }
-                });
-            
-                if(!exist)
-                {
-                    iten.totals = 1;
-                    cartCompact.push(iten);
-                }else{
-                    iten.totals = countExist;
-                    var indexControl=0;
-                    cartCompact.map((it)=>{
-                        if(it.id==iten.id)
-                        {
-                            cartCompact[indexControl].totals++;
-                        }
-                        indexControl++;
-                    });
-
-                }
-                // --------------------
-            }
-        });
-
-
-        console.log(cartCompact);
-        localStorage.setItem('cart',JSON.stringify(cartCompact));
-
-        cartCompact.map((iten)=>{
+        cart.map((iten)=>{
 
                 // New iten to add
                 var newIten = document.createElement('a');
-                newIten.innerHTML = '<label class="pull-left">' + iten.name + '</label>  <input value="' + iten.totals + '" data-id="'+iten.id+'" onchange="refreshCartSomeChage(this)" min="1" max="100" class="countCustom" type="number"><span class="badge badge-success badge-pill">$' + iten.price + '</span> <span class="badge badge-dark badge-pill menos-checkout" data-price="' + iten.price + '" onclick="removeIten(this)"><i class="fas fa-times"></i></span>';
+                newIten.innerHTML = '<label class="pull-left">#' + iten.name + '</label>  <input value="' + iten.totals + '" data-id="'+iten.id+'" onchange="refreshCartSomeChage(this)" min="1" max="100" class="countCustom" type="number"><span class="badge badge-success badge-pill">$' + iten.price + '</span> <span class="badge badge-dark badge-pill menos-checkout" data-price="' + iten.price + '" onclick="removeIten(this)"><i class="fas fa-times"></i></span>';
                 newIten.href = '#';
                 newIten.setAttribute('data-name', iten.name);
                 newIten.setAttribute('data-price', iten.price);
                 newIten.setAttribute('data-id', iten.id);
                 newIten.classList.add('dropdown-item', 'new-iten-add');
                 containerCartList.prepend(newIten);
-                Totals = parseFloat(Totals) + parseFloat(iten.price);
+                //Totals = parseFloat(Totals) + parseFloat(iten.price);
+                Totals = Totals + (parseFloat(iten.totals) * parseFloat(iten.price));
                 countItens++;
+                console.log(iten);
 
         });
     }
@@ -629,6 +597,7 @@ function checkout(){
     bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
     console.log('#checkout Totals '+Totals);
     updateLabelsTotalItems();
+    // document.getElementById('total-in-checkout').innerText='$ ' + Totals;
 }
 
 function refreshCart(it){
@@ -694,7 +663,8 @@ function updateLabelsTotalItems(){
         var cart = JSON.parse(localStorage.getItem('cart'));
         cart.map((iten) => {
             if (iten.id != undefined) {
-                Totals = parseFloat(Totals) + parseFloat(iten.price);
+                // Totals = parseFloat(Totals) + parseFloat(iten.price);                
+                Totals = Totals + (parseFloat(iten.totals) * parseFloat(iten.price));
                 countItens++;
             }
         });
