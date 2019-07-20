@@ -657,10 +657,42 @@ function refreshCartSomeChage(it){
 function updateLabelsTotalItems(){
     var countItens = 0;
         Totals = 0;
+
+    // Cleanning List Cart
+    var toRemove=[];
+    document.getElementById('container-cart-list').childNodes.forEach((it)=>{
+        if( it.id!=undefined && it.id.includes('p-') )
+        {
+            toRemove.push(it);            
+        }
+    });
+    toRemove.forEach((fromRemove)=>{
+        fromRemove.remove();
+    });
+        
+    var containerCartList = document.getElementById('container-cart-list');
+
     if (localStorage.getItem('cart') != null) {
         var cart = JSON.parse(localStorage.getItem('cart'));
         cart.map((iten) => {
             if (iten.id != undefined) {
+                // -----------------------
+                console.log(iten.id+') '+iten.name+' x'+iten.totals);
+    
+                // New iten to add
+                var newIten = document.createElement('a');
+                newIten.id='p-'+iten.id;
+                newIten.innerHTML = '<label class="pull-left">' + iten.name + '</label>  <span class="badge badge-success badge-pill">$' + iten.price  + '</span> <span id="pc-'+iten.id+'" class="badge badge-info badge-pill pc">x'+iten.totals+'</span>  <span class="badge badge-dark badge-pill menos" data-price="' + iten.price+ '" onclick="removeIten(this)"><i class="fas fa-times"></i></span>';
+                newIten.href = '#';
+                newIten.setAttribute('data-name', iten.name);
+                newIten.setAttribute('data-price', iten.price);
+                newIten.setAttribute('data-id', iten.id);
+                newIten.classList.add('dropdown-item', 'new-iten-add');
+
+
+                containerCartList.prepend(newIten);
+                
+                // -----------------------
                 // Totals = parseFloat(Totals) + parseFloat(iten.price);                
                 Totals = Totals + (parseFloat(iten.totals) * parseFloat(iten.price));
                 countItens++;
@@ -696,13 +728,15 @@ function updateLabelsTotalItems(){
     document.getElementById('total-in-checkout').innerText = '$ '+ parseFloat(Totals).toFixed(2);
     document.getElementById('baged-total').innerText = '$ '+ parseFloat(Totals).toFixed(2);
     document.getElementById('count-items').innerText = 'Items '+ countItens;
-    if(parseInt(Totals)==0)
+    if(parseFloat(Totals)==0)
     {
         for(var o=0;o<document.getElementsByClassName('new-iten-add').length;o++)
         {
             document.getElementsByClassName('new-iten-add').item(o).remove()
         }
         
+    }else{
+
     }
     console.log('Totals '+Totals); 
 }
