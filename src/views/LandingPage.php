@@ -88,7 +88,7 @@
 
                       <i onclick="getCommentaries(<?php echo $product['id']; ?>)" class="fa fa-users pull-right hand" data-placement="top" title="all commentaries" data-toggle="modal" data-target="#allCommentaries"></i>
                       <?php if (count($product['starByUser']) > 0): ?>
-
+                      <!--
                         <i
                             onclick="modCalcification(this)"
                             class="fa fa-file-signature pull-right hand"
@@ -99,6 +99,7 @@
                             data-stars="<?php echo $product['starByUser'][0]['stars']; ?>"
                             data-product-id="<?php echo $product['id']; ?>"
                             ></i>
+                          -->
                       <?php else: ?>
                         <i
                             onclick="modCalcificationM(this)"
