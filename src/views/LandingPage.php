@@ -247,8 +247,8 @@
         </ul>
         <ul class="list-group">
           <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <i id="pickup2" class="fas fa-truck-pickup pickup" data-toggle="tooltip" data-placement="top" title="pick up"></i>
-                  <i id="ups2" class="fas fa-truck pickup" data-toggle="tooltip" data-placement="top" title="UPS"></i>
+                  <i id="pickup2" onclick="toPickup(this)" class="fas fa-truck-pickup pickup" data-toggle="tooltip" data-placement="top" title="pick up"></i>
+                  <i id="ups2" onclick="toUPS(this)" class="fas fa-truck pickup" data-toggle="tooltip" data-placement="top" title="UPS"></i>
                   <span id="baged-truck2" class="badge badge-secondary badge-pill baged-pick-up">$0.00</span>
 
           </li>

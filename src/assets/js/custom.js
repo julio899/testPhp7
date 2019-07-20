@@ -4,12 +4,38 @@ var Totals = 0;
 var StarsEdition = 0;
 var productInEdition = 0;
 var TruckCost = 0;
+var TruckSelected = false;
 var starSelected = false;
 var baseURI = document.getElementById('baseURI').value;
 bagedTruck = document.getElementById('baged-truck');
+bagedTruck2 = document.getElementById('baged-truck2');
 bagedTotal = document.getElementById('baged-total');
 // set truck to pickup cost $0
 document.getElementById('pickup').classList.add('cartAdd');
+
+
+function toPickup(evt) {
+    console.log('pickup2');
+    console.log(evt);
+    evt.classList.remove('cartAdd2');
+    document.getElementById('ups2').classList.remove('cartAdd2');
+    evt.classList.add('cartAdd2');
+    TruckSelected = true;
+    localStorage.setItem('truck', 0.00);
+    updateLabelsTotalItems();
+}
+
+function toUPS(evt) {
+    console.log('ups2');
+    console.log(evt);
+    evt.classList.remove('cartAdd2');
+    document.getElementById('ups2').classList.remove('cartAdd2');
+    evt.classList.add('cartAdd2');
+    TruckSelected = true;
+    localStorage.setItem('truck', 5.00);
+    updateLabelsTotalItems();
+}
+
 
 document.getElementById('btn-checkout').addEventListener('click',()=>{
     checkout();
@@ -172,7 +198,9 @@ document.getElementById('pickupContainer').addEventListener('click', (evt) => {
         }
         document.getElementById('ups').classList.remove('cartAdd');
         document.getElementById('pickup').classList.remove('cartAdd');
-        if (idName != '') {
+        
+        console.log(TruckSelected);
+        if (idName != '' && !TruckSelected) {
             document.getElementById(idName).classList.add('cartAdd');
         }
         $('#' + idName).tooltip('hide');
@@ -201,11 +229,17 @@ document.getElementById('touch-cart-list').addEventListener('click', (e) => {
     }
     updateLabelsTotalItems();
 });
+
+
 var enableBtnPay = true;
 //Event click to btn-pay
 document.querySelector('#btn-pay').addEventListener('click', debounce(function() {
     var cart = JSON.parse(localStorage.getItem('cart'));
-    if (cart.length == 0) {
+    if(!TruckSelected){
+        alertify.alert('We are Sorry', 'Your need add some Truck!', function() {
+                    alertify.error('You need check a Truck');
+                });
+    }else if ( cart==null || cart.length == 0) {
         alertify.alert('We are Sorry', 'Your need add some item to the cart!', function() {
             alertify.success('Cart is Empty');
         });
@@ -560,13 +594,13 @@ function updateStar() {
 }
 
 function checkout(){
+   countItens = 0;
 
     if (localStorage.getItem('cart') != null) {
         var cart = JSON.parse(localStorage.getItem('cart'));
         var containerCartList = document.getElementById('list-commentaries-checkout');
             containerCartList.innerHTML='';
         Totals = 0;
-        countItens = 0;
         cart.map((iten)=>{
 
                 // New iten to add
@@ -594,7 +628,8 @@ function checkout(){
         bagedTruck.innerText = '$ ' + localStorage.getItem('truck');
         Totals += parseFloat(localStorage.getItem('truck'));
     }
-    document.getElementById('count-items').innerText = 'Items '+ countItens;
+    
+    document.getElementById('count-items').innerText = 'Items '+ countItens;    
     bagedTotal.innerText = '$ ' + parseFloat(Totals).toFixed(2);
     console.log('#checkout Totals '+Totals);
     updateLabelsTotalItems();
@@ -705,7 +740,7 @@ function updateLabelsTotalItems(){
     document.getElementById('ups').classList.remove('cartAdd');
     document.getElementById('ups2').classList.remove('cartAdd2');
 
-    if (localStorage.getItem('truck') != null) {
+    if (TruckSelected && localStorage.getItem('truck') != null) {
         var countTruck = localStorage.getItem('truck');
         Totals += parseFloat(localStorage.getItem('truck'));  
         document.getElementById('baged-truck').innerText='$ ' + countTruck;
