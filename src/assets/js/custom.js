@@ -199,6 +199,7 @@ document.getElementById('touch-cart-list').addEventListener('click', (e) => {
             enableBtnCart = true;
         }, 1000);
     }
+    updateLabelsTotalItems();
 });
 var enableBtnPay = true;
 //Event click to btn-pay
@@ -693,5 +694,15 @@ function updateLabelsTotalItems(){
     }
     
     document.getElementById('total-in-checkout').innerText = '$ '+ parseFloat(Totals).toFixed(2);
+    document.getElementById('baged-total').innerText = '$ '+ parseFloat(Totals).toFixed(2);
     document.getElementById('count-items').innerText = 'Items '+ countItens;
+    if(parseInt(Totals)==0)
+    {
+        for(var o=0;o<document.getElementsByClassName('new-iten-add').length;o++)
+        {
+            document.getElementsByClassName('new-iten-add').item(o).remove()
+        }
+        
+    }
+    console.log('Totals '+Totals); 
 }
