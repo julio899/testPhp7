@@ -170,6 +170,11 @@ class Products
             {
                 $total = $total + (floatval($value['price']) * intval($value['totals']));
             }
+
+            if (isset($value['name']) && $value['name'] == 'truck')
+            {
+                $total = $total + floatval($value['price']);
+            }
         }
         // add Truck Tax
         // $total += floatval($itensArray['truck']);
