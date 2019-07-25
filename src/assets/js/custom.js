@@ -668,10 +668,16 @@ function refreshCartSomeChage(it){
     var countItems = 0;
     var controlIndex = 0;
     var totalValue = 0;
-    console.log('id: '+it.getAttribute('data-id'));
+    console.log('id: '+it.getAttribute('data-id'), parseInt(it.value) );
+    console.log( parseInt(it.value) >= 1 );
     console.log('count: '+it.value);
+    if (!(parseInt(it.value) >= 1))
+    {
+        it.value=1;
+    }
     cart_up=[];
     cart.map((iten)=>{
+       console.log('* # '+it.value);
       if(iten.id==it.getAttribute('data-id'))
       {
          iten.totals=parseInt(it.value);
